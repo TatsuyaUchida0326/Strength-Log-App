@@ -96,3 +96,17 @@ p {
     color: $state-danger-text;
   }
 }
+
+.jumbotron {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+}
+
+.btn-success {
+    background-color: #5cb85c; /* エネルギッシュな緑色 */
+    border-color: #4cae4c;
+    &:hover {
+      background-color: #4cae4c;
+      border-color: #4cae4c;
+    }
+}
