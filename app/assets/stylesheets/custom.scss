@@ -69,15 +69,22 @@ p {
 }
 
 /* debug */
-
 .debug_dump {
   clear: both;
   float: left;
   width: 100%;
   margin-top: 45px;
-  -moz-box-sizing:    border-box;
+  background-color: #f5f5f5; // 背景色を明るい色に設定
+  color: #333; // 文字色を暗めの色に設定
+  padding: 15px; // 内側の余白を設定
+  border: 1px solid #ccc; // 枠線を設定
+  border-radius: 4px; // 角を丸く設定
+  font-size: 0.85em; // フォントサイズを調整
+  white-space: pre-wrap; // 折り返しを許可して、長いテキストがある場合に複数行にわたって表示
+  word-wrap: break-word; // 長い単語がある場合に折り返しを許可
+  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  box-sizing:         border-box;
+  box-sizing: border-box;
 }
 
 /* error_messages */
@@ -102,6 +109,32 @@ p {
     padding-bottom: 10rem;
 }
 
+.center.jumbotron h1,
+.center.jumbotron p {
+  color: #fff; // テキストの色を白に
+  text-shadow: 2px 2px 4px #000; // 黒い影を付ける
+}
+
+.center.jumbotron {
+  color: #fff; // テキストの色を白に設定
+
+  h1, p {
+    color: #fff; // タイトルと段落のテキストも白に設定
+  }
+  position: relative;
+  background: url('fitness_club.jpg') no-repeat center center; // 画像を中央に配置
+  background-size: cover; // 画像をコンテナにフィットさせる
+  text-align: center; // テキストを中央に配置
+}
+
+// 画像がレスポンシブであることを保証
+.img-responsive {
+  width: 100%; // 幅を100%に設定
+  height: auto; // 高さを自動調整
+  display: block; // ブロックレベル要素として表示
+  margin: 0 auto; // 左右のマージンを自動で設定して中央に配置
+}
+
 .btn-success {
     background-color: #5cb85c; /* エネルギッシュな緑色 */
     border-color: #4cae4c;
@@ -109,4 +142,55 @@ p {
       background-color: #4cae4c;
       border-color: #4cae4c;
     }
+}
+
+.signup-container {
+  background-color: #1E1E1E; // ダークな背景色
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 50px auto;
+  color: #fff; // テキストの色
+
+  h1 {
+    margin-bottom: 30px;
+    color: #F0AD4E; // エネルギッシュなオレンジ色
+  }
+
+  .signup-form {
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .control-label {
+      display: block;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #D9534F; // 赤色のアクセント
+    }
+
+    .form-control {
+      background-color: #333;
+      border: 1px solid #555;
+      color: #B8B8B8; // 入力テキストの色
+      &:focus {
+        border-color: #F0AD4E;
+        box-shadow: none;
+      }
+    }
+
+    .btn-signup {
+      background-color: #5CB85C; // ボタンの色
+      border-color: #4CAE4C;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: 10px;
+      &:hover {
+        background-color: #449D44;
+        border-color: #398439;
+      }
+    }
+  }
 }
