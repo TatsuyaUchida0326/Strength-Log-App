@@ -2,6 +2,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    # params[:month] から日付を取得し、存在しない場合は今日の日付を使用
+    @date = params[:month] ? Date.parse(params[:month]) : Date.today
   end
 
   def new

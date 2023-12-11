@@ -1,18 +1,19 @@
 <% provide(:title, @user.name) %>
-<div>
-  <table class="table table-bordered table-condensed user-table">
-    <tr>
-      <td>時間管理表</td>
-      <td>指定勤務時間</td>
-      <td>基本時間</td>
-      <td>月初日</td>
-    </tr>
+<div class="calendar-navigation">
+  <%= link_to '◀', user_path(@user, month: @date.prev_month.beginning_of_month) %>
+  <span>＜ <%= @date.strftime("%Y年 %m月") %> ＞</span>
+  <%= link_to '▶', user_path(@user, month: @date.next_month.beginning_of_month) %>
+</div>
+<div class="calendar">
+  <!-- 曜日のヘッダー -->
+  <% %w[日 月 火 水 木 金 土].each do |day| %>
+    <div class="day-header"><%= day %></div>
+  <% end %>
 
-    <tr>
-      <td>所属</td>
-      <td>名前：<%= @user.name %></td>
-      <td>出勤日数</td>
-      <td>月末日</td>
-    </tr>
-  </table>
+  <!-- 月の各日付 -->
+  <% @date.beginning_of_month.step(@date.end_of_month) do |date| %>
+    <div class="day <%= 'today' if date == Date.today %>">
+      <%= date.day %>
+    </div>
+  <% end %>
 </div>

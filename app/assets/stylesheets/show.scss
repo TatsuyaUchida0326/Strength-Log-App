@@ -1,0 +1,56 @@
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); // 7列のグリッド
+  grid-gap: 5px;
+  background: #e74c3c;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url('show.jpg') no-repeat center center;
+    background-size: cover;
+    filter: grayscale(100%);
+    z-index: -1;
+  }
+
+  // 曜日ヘッダーのスタイル
+  .day-header {
+    text-align: center;
+    color: white; // テキスト色
+    background-color: #c0392b; // 背景色
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .day {
+    padding: 10px;
+    background: #c0392b;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .today {
+    background: #3498db;
+  }
+}
+
+.calendar-navigation {
+  // その他のスタイル...
+}
