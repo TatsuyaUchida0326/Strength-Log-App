@@ -10,7 +10,7 @@
   position: relative;
   overflow: hidden;
   z-index: 0;
-
+  
   &:before {
     content: "";
     position: absolute;
@@ -27,13 +27,14 @@
   // 曜日ヘッダーのスタイル
   .day-header {
     text-align: center;
-    color: white; // テキスト色
-    background-color: #c0392b; // 背景色
+    color: black; // テキストの色を黒に変更
+    background-color: #f0ad4e; // 明るいオレンジ色に変更
     padding: 10px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: bold; // フォントを太く
   }
 
   .day {
@@ -49,8 +50,33 @@
   .today {
     background: #3498db;
   }
+  
+  .not-current-month {
+    filter: grayscale(100%); // グレースケールにする
+    opacity: 0.5; // 透明度を下げて目立たなくする（オプション）
+  }
 }
 
-.calendar-navigation {
-  // その他のスタイル...
+.add-training {
+  display: flex;
+  justify-content: center; // 水平方向の中央揃え
+  align-items: center; // 垂直方向の中央揃え（必要に応じて）
+  margin-top: 20px; // カレンダーからの余白
+}
+
+.add-training button {
+  background-image: linear-gradient(to right, #ffb347, #ffcc33, #ffb347, #ffcc33, #ffb347);
+  color: white;
+  border: 1px solid #ffd700; // 薄いゴールド色のボーダー
+  padding: 10px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1); // 外側の影
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4); // テキストの影
+
+  &:hover {
+    background-image: linear-gradient(to right, #ffd700, #ffcc00, #ffd700, #ffcc00, #ffd700);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
 }

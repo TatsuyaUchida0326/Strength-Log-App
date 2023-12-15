@@ -2,8 +2,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    # params[:month] から日付を取得し、存在しない場合は今日の日付を使用
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
+    # 月の開始日と終了日を取得
+    @start_date = @date.beginning_of_month.beginning_of_week(:sunday)
+    @end_date = @date.end_of_month.end_of_week(:sunday)
   end
 
   def new
@@ -19,6 +21,10 @@ class UsersController < ApplicationController
     else
       render :new
     end
+  end
+  
+  def edit
+    @user = User.find(params[:id])
   end
 
   private
