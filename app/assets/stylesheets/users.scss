@@ -22,3 +22,35 @@
 .btn-user--edit {
   margin-top: 10px;
 }
+
+.training-tags {
+  margin-bottom: 20px; // 下部の余白
+  text-align: center; // 中央揃え
+
+  .nav {
+    display: inline-block; // インラインブロックとして表示
+    padding-left: 0; // デフォルトのパディングをリセット
+
+    .nav-item {
+      display: inline-block; // インラインブロックとして表示
+
+      .nav-link {
+        display: block;
+        padding: 8px 16px; // パディングを追加
+        margin: 2px; // 他のタグからの余白
+        background-color: #f7f7f7; // 背景色
+        border: 1px solid #ddd; // ボーダー
+        border-radius: 4px; // 角を丸くする
+        color: #555; // テキスト色
+        text-decoration: none; // 下線を無くす
+
+        &:hover,
+        &:focus,
+        &.active {
+          background-color: #e9ecef; // ホバー時の背景色
+          color: #212529; // ホバー時のテキスト色
+        }
+      }
+    }
+  }
+}
