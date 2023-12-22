@@ -1,0 +1,22 @@
+<!-- app/views/exercises/index.html.erb -->
+<% @exercises.group_by(&:part).each do |part, exercises| %>
+  <h2><%= part %></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>種目</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% exercises.each do |exercise| %>
+        <tr>
+          <td><%= exercise.exercise %></td>
+          <td>
+            <%= link_to '削除', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

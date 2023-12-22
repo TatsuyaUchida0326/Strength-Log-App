@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>トレーニング記録</title>
+</head>
+<body>
+
+<h2>部位を追加</h2>
+
+<%= form_with(model: Exercise.new, local: true) do |form| %>
+  <div>
+    <%= form.label :part, '部位:' %>
+    <%= form.text_field :part %>
+  </div>
+
+  <div>
+    <%= form.label :exercise, '種目:' %>
+    <%= form.text_field :exercise %>
+  </div>
+
+  <div>
+    <%= form.submit '追加' %>
+  </div>
+<% end %>
+
+</body>
+</html>

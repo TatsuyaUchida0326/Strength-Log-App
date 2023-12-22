@@ -6,12 +6,15 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_importmap_tags %>
     <%= render 'layouts/shim' %>
+
+    <!-- Font AwesomeのCDNリンクを追加 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   </head>
   <body>
     <%= render 'layouts/header' %>
     <div class="container">
-      <% flash.each do |message_type, msg| %>
-        <div class="alert alert-<%= message_type %>"><%= msg %></div>
+      <% flash.each do |message_type, message| %>
+        <div class="alert <%= message_type == 'notice' ? 'alert-success' : 'alert-warning' %>"><%= message %></div>
       <% end %>
       <%= yield %>
       <%= debug(params) if Rails.env.development? %>

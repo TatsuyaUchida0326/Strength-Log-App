@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'exercises/new'
+  get 'exercises/create'
   root 'static_pages#top'
   get '/signup', to: 'users#new'
 
@@ -8,4 +10,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :users
+
+  # ここに新しいルートを追加
+  resources :exercises, only: [:new, :create, :index, :destroy]
 end
