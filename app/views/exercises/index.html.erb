@@ -1,11 +1,10 @@
-<!-- app/views/exercises/index.html.erb -->
 <% @exercises.group_by(&:part).each do |part, exercises| %>
-  <h2><%= part %></h2>
-  <table>
+  <h2 class="part-title"><%= part %></h2>
+  <table class="styled-table">
     <thead>
       <tr>
         <th>種目</th>
-        <th>操作</th>
+        <th>削除/編集</th>
       </tr>
     </thead>
     <tbody>

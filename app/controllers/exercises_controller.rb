@@ -21,6 +21,10 @@ class ExercisesController < ApplicationController
     @exercises = Exercise.order(:part)
   end
   
+  def strength_log
+    @exercises = Exercise.order(:part)
+  end
+  
   private
   # Strong Parametersを使用して安全にパラメータを取り扱う
   def exercise_params

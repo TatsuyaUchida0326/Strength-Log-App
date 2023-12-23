@@ -2,9 +2,9 @@
 <%= render 'training_tags' %>
 
 <div class="calendar-navigation">
-  <%= link_to '◀', user_path(@user, month: @date.prev_month) %>
-  <span><%= @date.strftime("%Y年 %m月") %></span>
-  <%= link_to '▶', user_path(@user, month: @date.next_month) %>
+  <%= link_to '◀', user_path(@user, month: @date.prev_month), class: 'nav-arrow' %>
+  <span class="month-year"><%= @date.strftime("%Y年 %m月") %></span>
+  <%= link_to '▶', user_path(@user, month: @date.next_month), class: 'nav-arrow' %>
 </div>
 
 <div class="calendar">

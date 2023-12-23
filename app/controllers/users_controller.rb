@@ -1,19 +1,12 @@
 class UsersController < ApplicationController
-<<<<<<< HEAD
-  before_action :set_user, only: [:show, :edit, :update]
-  before_action :logged_in_user, only: [:show, :edit, :update]
-  before_action :correct_user, only: [:edit, :update]
-  
-=======
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
-  
+
   def index
     @users = User.all
   end
-  
->>>>>>> f285d56 (部位、種目の追加、削除完成)
+
   def show
     @user = User.find(params[:id])
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
@@ -48,20 +41,11 @@ class UsersController < ApplicationController
       render :edit      
     end
   end
-  
+
   def destroy
     @user.destroy
     flash[:success] = "#{@user.name}のデータを削除しました。"
     redirect_to users_url
-  end
-  
-  def update
-    if @user.update(user_params)
-      flash[:success] = "ユーザー情報を更新しました。"
-      redirect_to @user
-    else
-      render :edit      
-    end
   end
 
   private
@@ -70,17 +54,11 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
     
-    # beforeフィルター
-    
     # paramsハッシュからユーザーを取得します。
     def set_user
       @user = User.find(params[:id])
     end
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f285d56 (部位、種目の追加、削除完成)
     # ログイン済みのユーザーか確認します。
     def logged_in_user
       unless logged_in?

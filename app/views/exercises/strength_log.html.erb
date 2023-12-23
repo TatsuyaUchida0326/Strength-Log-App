@@ -1,0 +1,35 @@
+<% provide(:title, 'トレーニングログ') %>
+<h1>トレーニングログ</h1>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <!-- トレーニングセットの入力フォーム -->
+      <div class="card">
+        <div class="card-header">
+          Last Record: 2023/12/06
+        </div>
+        <div class="card-body">
+          <% # 仮の値でループを作成 %>
+          <% 4.times do |i| %>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">セット<%= i + 1 %></label>
+              <div class="col-sm-4">
+                <input type="number" class="form-control" placeholder="重量 kg">
+              </div>
+              <div class="col-sm-4">
+                <input type="number" class="form-control" placeholder="回数 reps">
+              </div>
+              <div class="col-sm-2">
+                <button class="btn btn-danger btn-block"><i class="fas fa-times"></i></button>
+              </div>
+            </div>
+          <% end %>
+          <div class="text-center">
+            <button class="btn btn-success"><i class="fas fa-plus"></i> 追加</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

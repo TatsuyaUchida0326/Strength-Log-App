@@ -5,7 +5,8 @@
   background: #e74c3c;
   padding: 20px;
   border-radius: 10px;
-  max-width: 600px;
+  max-width: 1000px;
+  height: 500px;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -29,7 +30,7 @@
     text-align: center;
     color: black; // テキストの色を黒に変更
     background-color: #f0ad4e; // 明るいオレンジ色に変更
-    padding: 10px;
+    padding: 0px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -46,7 +47,7 @@
     justify-content: center;
     align-items: center;
   }
-
+  
   .today {
     background: #3498db;
   }
@@ -69,7 +70,7 @@
   color: white;
   border: 1px solid #ffd700; // 薄いゴールド色のボーダー
   padding: 10px 30px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1); // 外側の影
@@ -81,3 +82,32 @@
   }
 }
 
+<<<<<<< HEAD
+=======
+.calendar-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #f8f9fa; // 背景色
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.nav-arrow {
+  font-size: 22px;
+  color: #007bff; // 矢印の色
+  margin: 0 15px;
+  text-decoration: none; // アンダーラインを除去
+
+  &:hover {
+    color: #0056b3; // ホバー時の色
+  }
+}
+
+.month-year {
+  font-size: 22px;
+  font-weight: bold;
+  color: #343a40; // 年月のテキスト色
+}
+>>>>>>> 2cf0b0c (トレーニングログの画面作成から再開)
