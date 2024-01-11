@@ -1,71 +1,87 @@
 .part-title {
+  background-color: #f8f9fa; /* 背景色 */
+  padding: 10px 15px;        /* パディング */
+  margin: 10px 0;            /* 上下マージン */
+  border-radius: 0px;        /* 角の丸み */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影を追加 */
+  cursor: pointer;           /* カーソルをポインターに変更 */
+  border: 1px solid #ddd;    /* 境界線 */
   text-align: left;
   margin-bottom: 5px;
   color: #333;
   font-size: 25px;
-  font-weight: 600; /* より太めのフォントに設定 */
+  font-weight: 600; // より太めのフォントに設定
+}
+
+.part-title:hover {
+  color: #0056b3;    /* テキストの色を変更 */
+  text-decoration: underline; /* 下線を引く */
+  cursor: pointer;   /* カーソルをポインター形状に変更 */
 }
 
 .styled-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 250px 50;
-  margin-bottom: 40px;
+  margin: 10px 0px 40px; // 上下左右のマージンを設定
   font-size: 0.9em;
   font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
+  border-radius: 0px; // 全角を丸くする
 
-.styled-table thead tr {
-  background-color: #000080; /* 紫色に変更 */
-  color: #ffffff;
-  text-align: left;
-  height: 0px;
-}
+  thead tr {
+    background-color: #000080; // 紫色に変更
+    color: #ffffff;
+    text-align: left;
+  }
 
-.styled-table th, .styled-table td {
-  padding: 12px 15px;
-  text-align: center; /* セルを中央揃えに変更 */
-  border-right: 5px solid #ddd; /* 右側に境界線を追加 */
-}
+  th, 
+  td {
+    padding: 12px 15px;
+    text-align: center; // セルを中央揃えに変更
+    border-right: 5px solid #ddd; // 右側に境界線を追加
+  }
 
-/* 種目のヘッダー（th要素）を左揃えに */
-.styled-table th:first-child {
-  text-align: center;
-  font-size: 17px;
-}
+  th:first-child {
+    text-align: center;
+    font-size: 17px;
+  }
 
-/* 種目の名称（td要素）も左揃えに */
-.styled-table td:first-child {
-  width: 400px;
-  text-align: left;
-  font-size: 14px;
-}
+  td:first-child {
+    width: 400px;
+    text-align: left;
+    font-size: 14px;
+  }
 
-.styled-table th:last-child,
-.styled-table td:last-child {
-  width: 100px; /* 操作セルの幅を100pxに設定 */
-  min-width: 100px; /* 最小幅も設定 */
-  text-align: center;
-  font-size: 17px;
-}
+  th:last-child,
+  td:last-child {
+    width: 100px; // 操作セルの幅を100pxに設定
+    min-width: 100px; // 最小幅も設定
+    font-size: 17px;
+  }
 
-.styled-table tbody tr {
-  border-bottom: 1px solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
-}
-
-.styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
-}
-
-.styled-table tbody tr.active-row {
-  font-weight: bold;
-  color: #009879;
+  tbody tr {
+    border-bottom: 1px solid #dddddd;
+    
+    &:nth-of-type(even) {
+      background-color: #f3f3f3;
+    }
+    
+    &:last-of-type {
+      border-bottom: 2px solid #009879;
+      td:first-child {
+        border-bottom-left-radius: 15px; // 左下の角を丸くする
+      }
+      td:last-child {
+        border-bottom-right-radius: 15px; // 右下の角を丸くする
+      }
+    }
+    
+    &.active-row {
+      font-weight: bold;
+      color: #009879;
+    }
+  }
 }
 
 .btn-danger {
@@ -76,11 +92,26 @@
   text-decoration: none;
   border-radius: 5px;
   transition: all 0.2s;
+
+  &:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
 }
 
-.btn-danger:hover {
-  background-color: #c82333;
-  border-color: #bd2130;
+.btn-edit {
+  color: #fff;
+  background-color: #007bff; // 例えば青色
+  border-color: #007bff;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
 }
 
 .form-container {
@@ -93,13 +124,13 @@
 }
 
 .form-title {
-  font-size: 30px; /* フォントサイズを大きくする */
-  color: #4a4a4a; /* タイトルの色を変更 */
-  text-align: center; /* 中央揃えにする */
-  margin-bottom: 30px; /* 下部のマージンを追加 */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* テキストに影をつける */
-  font-family: 'Arial', sans-serif; /* フォントファミリーを指定 */
-  font-weight: bold; /* フォントを太くする */
+  font-size: 30px;
+  color: #4a4a4a;
+  text-align: center;
+  margin-bottom: 30px;
+  text-shadow: none; // シャドウを削除
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
 }
 
 .form-group {
@@ -126,6 +157,159 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
+// トレーニングログページのスタイル
+.training-log-page {
+  .card {
+    border-radius: 15px; // 丸みの半径を設定
+    max-width: 1000px; // カードの最大幅を設定
+    margin: 0 auto; // 中央揃え
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // カードに影を追加
+
+    .card-header {
+      border-top-left-radius: 15px;  // 左上の角を丸くする
+      border-top-right-radius: 15px; // 右上の角を丸くする
+      display: flex; // Flexboxを有効にする
+      align-items: center; // 垂直方向の中央揃え
+      justify-content: center; // 水平方向の中央揃え
+      font-weight: bold;
+      text-align: center;
+      background-color: #000080; // 背景色を紺色に設定
+      color: #333; // テキストの色を黒に変更
+      padding: 20px 0; // 上下にパディングを設定
+      font-size: 30px; // フォントサイズを大きく設定
+      margin-top: 30px; // 上部のマージンを設定
+      text-shadow: none; // テキストの影を削除
+    
+      h2 {
+        max-width: 70%;       // タイトルの最大幅を設定
+        margin: 0 auto;   // 左右のマージンを自動に設定して中央寄せ
+        font-weight: 900;     // タイトルのフォントをより太く設定
+        color: #fff;
+      }
+    }
+    
+    .card-body {
+      padding: 60px; // 内部のパディングを増やす
+      .form-group {
+        display: flex;
+        align-items: center; // 要素を垂直方向に中央揃えにする
+        border-bottom: 1px solid #ddd; // 入力フィールドの下にボーダーを追加
+        margin-bottom: 20px; // 各フォームグループの下のマージンを増やす
+        .col-form-label {
+          font-size: 18px; // ラベルのフォントサイズを調整
+          font-weight: bold; // ラベルのフォントを太く
+        }
+        .form-control {
+          height: 40px; // 入力フィールドの高さを調整
+          font-size: 16px; // 入力フィールドのフォントサイズを調整
+          border-radius: 0.25rem; // 入力フィールドの角を丸く
+        }
+        .btn {
+          font-size: 16px; // ボタンのフォントサイズを調整
+          padding: 5px 10px; // ボタンのパディングを調整
+        }
+      }
+      .btn-outline-danger {
+        border-color: #dc3545; // 削除ボタンのボーダー色
+        &:hover {
+          background-color: #dc3545;
+          color: #fff;
+        }
+      }
+    }
+    .btn-outline-success {
+      padding: 10px 20px; // 追加ボタンのパディングを調整
+      font-size: 18px; // 追加ボタンのフォントサイズを調整
+      &:hover {
+        background-color: #28a745;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-dialog {
+  margin: 10% auto;
+  max-width: 600px; /* モーダルの最大幅を400pxに設定 */
+}
+
+.modal-content {
+  position: relative;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* ここに横幅を設定しても良いが、.modal-dialogでmax-widthを設定しているので不要かもしれない */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 10px;
+  margin: -20px -20px 10px;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.close {
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+.modal-body {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #555;
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6;
+  padding-top: 10px;
+  text-align: right;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
 }
 
 .btn-primary:hover {

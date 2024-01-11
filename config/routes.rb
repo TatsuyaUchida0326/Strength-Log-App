@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :users
 
-  resources :exercises, only: [:new, :create, :index, :destroy] do
+  resources :exercises, only: [:new, :create, :index, :destroy, :edit, :update] do
     collection do
       get :strength_log
     end

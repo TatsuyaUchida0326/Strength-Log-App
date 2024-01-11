@@ -1,21 +1,54 @@
 <% @exercises.group_by(&:part).each do |part, exercises| %>
-  <h2 class="part-title"><%= part %></h2>
-  <table class="styled-table">
-    <thead>
-      <tr>
-        <th>種目</th>
-        <th>削除/編集</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% exercises.each do |exercise| %>
+  <h2 class="part-title" data-toggle="collapse" data-target="#exercises-for-<%= part %>"><%= part %></h2>
+
+  <div id="exercises-for-<%= part %>" class="collapse">
+    <table class="styled-table">
+      <thead>
         <tr>
-          <td><%= exercise.exercise %></td>
-          <td>
-            <%= link_to '削除', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %>
-          </td>
+          <th>種目</th>
+          <th>削除/編集</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% exercises.each do |exercise| %>
+          <tr>
+            <td><%= exercise.exercise %></td>
+            <td>
+              <%= link_to '削除', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %>
+              <!-- 編集ボタン: モーダルを開くためのトリガー -->
+              <%= link_to '編集', "#", class: 'btn btn-edit', data: { toggle: 'modal' }, onclick: "openModal('#modal-#{exercise.id}')" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <% exercises.each do |exercise| %>
+    <!-- モーダルの定義 -->
+    <div class="modal" id="modal-<%= exercise.id %>" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">種目名の編集： <%= exercise.exercise %></h4>
+            <button type="button" class="close" onclick="closeModal('#modal-<%= exercise.id %>')">&times;</button>
+          </div>
+          <div class="modal-body">
+            <!-- 編集フォーム -->
+            <%= form_with(model: exercise, local: true) do |form| %>
+              <div class="form-group">
+                <%= form.label :exercise, "種目名" %>
+                <%= form.text_field :exercise, class: 'form-control' %>
+              </div>
+              <!-- 保存ボタン -->
+              <%= form.submit "保存", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('#modal-<%= exercise.id %>')">閉じる</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 <% end %>
