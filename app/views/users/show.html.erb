@@ -15,12 +15,10 @@
 
   <!-- 月の日付 -->
   <% (@start_date..@end_date).each do |date| %>
-    <div class="day <%= 'today' if date == Date.today %> <%= 'not-current-month' unless date.month == @date.month %>">
-      <%= date.day %>
-    </div>
+    <%= link_to exercises_path(date: date), class: 'calendar-date-link' do %>
+      <div class="<%= 'day' %> <%= 'today' if date == Date.today %> <%= 'not-current-month' unless date.month == @date.month %> <%= 'training-day' if @training_days[date] && @training_days[date] > 0 %>">
+        <%= date.day %>
+      </div>
+    <% end %>
   <% end %>
-</div>
-<!-- トレーニング追加ボタン -->
-<div class="add-training">
-  <button class="btn btn-primary">🏆本日のトレーニングを追加🏆</button>
 </div>

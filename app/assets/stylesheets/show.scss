@@ -37,19 +37,34 @@
     align-items: center;
     font-weight: bold; // フォントを太く
   }
-
+  
+  .calendar-date-link {
+    display: block;
+    text-decoration: none;
+    color: black; // テキストの色を黒に設定
+    &:hover .day {
+      background-color: #ffc0cb; // ホバー時の背景色を薄いピンクに設定
+    }
+  }
+  
   .day {
-    padding: 10px;
-    background: #c0392b;
-    color: white;
+    font-size: 20px;
+    padding: 20px;
+    background: white;
+    color: black; // フォントの色を黒に変更
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer; // カーソルをポインターに変更
+  }
+  
+  .day:hover {
+    background-color: #ffc0cb; // 薄いピンク色の背景色に変更
   }
   
   .today {
-    background: #3498db;
+    background: #2ecc71; // エメラルドグリーンの背景色
   }
   
   .not-current-month {
@@ -107,4 +122,8 @@
   font-size: 22px;
   font-weight: bold;
   color: #343a40; // 年月のテキスト色
+}
+
+.training-day {
+  background-color: red; /* トレーニングがある日に赤色を表示 */
 }

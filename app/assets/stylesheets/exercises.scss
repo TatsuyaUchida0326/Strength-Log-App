@@ -315,3 +315,27 @@
 .btn-primary:hover {
   background-color: #0056b3;
 }
+
+.message-box {
+  width: 60%; /* 幅を60%に設定 */
+  height: 100px; /* 高さを150pxに設定 */
+  margin: 20px auto; /* 上下のマージンと左右の中央揃え */
+  padding: 20px; /* 内側の余白 */
+  border: 3px dashed #ff9900; /* 点線の枠 */
+  background-color: #ffffe0; /* 薄い背景色 */
+  border-radius: 10px; /* 角丸 */
+  display: flex; /* Flexboxを使用 */
+  align-items: center; /* 縦方向の中央揃え */
+  justify-content: center; /* 横方向の中央揃え */
+}
+
+.no-exercise-message {
+  font-size: 24px; /* 文字の大きさを24pxに設定 */
+  font-weight: bold; /* 文字を太く */
+  color: #ff6600; /* 文字色 */
+}
+
+.message-box-link {
+  text-decoration: none; /* リンクの下線を削除 */
+  color: inherit; /* 親要素のテキスト色を継承 */
+}

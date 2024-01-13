@@ -2,6 +2,8 @@
     before_action :set_exercise, only: [:edit, :update, :destroy]
     
     def new
+      @exercise = Exercise.new
+      @exercise.date = params[:date] if params[:date].present?
     end
   
     def create
@@ -20,7 +22,12 @@
     end
     
     def index
-      @exercises = Exercise.order(:part)
+      if params[:date]
+        @selected_date = params[:date].to_date
+        @exercises = Exercise.where(date: @selected_date)
+      else
+        @exercises = Exercise.all
+      end
     end
     
     def strength_log
@@ -47,6 +54,6 @@
     end
     # Strong Parametersを使用して安全にパラメータを取り扱う
     def exercise_params
-      params.require(:exercise).permit(:part, :exercise, :name) # 'name' を追加
+      params.require(:exercise).permit(:part, :exercise, :date) # 'date' を追加
     end
   end

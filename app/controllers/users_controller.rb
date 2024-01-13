@@ -8,11 +8,13 @@ class UsersController < ApplicationController
   end
 
   def show
+    month_exercises = Exercise.where(date: @start_date..@end_date)
     @user = User.find(params[:id])
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
     # 月の開始日と終了日を取得
     @start_date = @date.beginning_of_month.beginning_of_week(:sunday)
     @end_date = @date.end_of_month.end_of_week(:sunday)
+    @training_days = month_exercises.group_by { |e| e.date.to_date }.transform_values(&:count)
   end
 
   def new
