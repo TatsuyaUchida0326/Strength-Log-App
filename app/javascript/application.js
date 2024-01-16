@@ -49,4 +49,39 @@ document.addEventListener('turbo:load', () => {
       event.target.style.display = "none";
     }
   }
-});
+
+  // フラッシュメッセージを非表示にする機能の追加
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.alert').forEach(alert => {
+      alert.style.display = 'none';
+    });
+  });
+
+  // 追加ボタンにイベントリスナーを設定
+  document.querySelectorAll('.btn-add').forEach(button => {
+    button.addEventListener('click', function(event) {
+      event.preventDefault(); // デフォルトのリンク動作を防止
+      const exerciseId = this.dataset.exerciseId; // データ属性からexerciseIdを取得
+      openAddModal(exerciseId); // モーダルを開く関数を呼び出し
+    });
+  });
+
+    // 追加ボタン用のモーダルを開く関数
+  window.openAddModal = function(exerciseId) {
+    // exerciseIdをモーダルの隠しフィールドに設定
+    var modal = document.querySelector('#add-exercise-modal');
+    modal.querySelector('input[name="exercise_id"]').value = exerciseId;
+    // モーダルを表示
+    modal.style.display = "block";
+  }
+
+  // モーダルの背景をクリックしたときにモーダルを閉じるイベントリスナーを追加
+  window.addEventListener('click', function(event) {
+    if (event.target.classList.contains('modal')) {
+      event.target.style.display = "none";
+    }
+  });
+
+  // 他の必要なJavaScriptコードやイベントリスナーをここに追加
+
+}); // turbo:loadイベントリスナーの終わり

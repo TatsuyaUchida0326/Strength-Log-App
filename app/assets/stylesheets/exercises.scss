@@ -339,3 +339,28 @@
   text-decoration: none; /* リンクの下線を削除 */
   color: inherit; /* 親要素のテキスト色を継承 */
 }
+
+.date-display {
+  border: 2px solid #000000; /* 黒の枠線 */
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #b2fab4; /* 明るい緑色の背景 */
+  border-radius: 10px; /* 角を丸くする */
+  width: 30%; /* 横幅の設定 */
+  height: 80px; /* 縦幅を設定 */
+  margin: 0 auto; /* 中央揃え */
+}
+
+.date-title {
+  font-size: 30px; /* 文字サイズを大きくする */
+  font-weight: bold; /* 文字を太くする */
+  color: #333333; /* 濃いグレーの文字色 */
+}
+
+.exercise-name {
+  width: 75%; /* 種目のセルの幅を設定 */
+}
+
+.exercise-actions {
+  width: 25%; /* 操作のセルの幅を設定 */
+}

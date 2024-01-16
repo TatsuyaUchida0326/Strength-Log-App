@@ -7,20 +7,30 @@
     end
   
     def create
-      @exercise = Exercise.new(exercise_params)
+      if params[:exercise_id]
+        # 既存のトレーニング種目を複製して新しい日付で保存
+        original_exercise = Exercise.find(params[:exercise_id])
+        @exercise = original_exercise.dup
+        @exercise.date = params[:date]
+      else
+        # 新しいトレーニング種目を作成
+        @exercise = Exercise.new(exercise_params)
+      end
+    
       if @exercise.save
-        redirect_to exercises_path
+        redirect_to exercises_path(date: @exercise.date.strftime("%Y-%m-%d")), notice: 'トレーニングが追加されました。'
       else
         render :new
       end
     end
-    
+
     def destroy
       @exercise = Exercise.find(params[:id])
+      date_of_exercise = @exercise.date.strftime("%Y-%m-%d") # トレーニングの日付を取得
       @exercise.destroy
-      redirect_to exercises_path, notice: 'エクササイズが削除されました。'
+      redirect_to exercises_path(date: date_of_exercise), notice: 'エクササイズが削除されました。'
     end
-    
+
     def index
       if params[:date]
         @selected_date = params[:date].to_date
@@ -41,12 +51,13 @@
     def update
       @exercise = Exercise.find(params[:id])
       if @exercise.update(exercise_params)
-        redirect_to exercises_path, notice: '種目が更新されました。'
+        date_of_exercise = @exercise.date.strftime("%Y-%m-%d") # トレーニングの日付を取得
+        redirect_to exercises_path(date: date_of_exercise), notice: '種目が更新されました。'
       else
         render :edit
       end
     end
-    
+
     private
     
     def set_exercise
