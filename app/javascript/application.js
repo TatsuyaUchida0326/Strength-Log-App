@@ -1,5 +1,4 @@
-import "@hotwired/turbo-rails"
-import "controllers"
+import "@hotwired/turbo-rails";
 
 document.addEventListener('turbo:load', () => {
   // 既存のドロップダウン初期化コード
@@ -61,17 +60,16 @@ document.addEventListener('turbo:load', () => {
   document.querySelectorAll('.btn-add').forEach(button => {
     button.addEventListener('click', function(event) {
       event.preventDefault(); // デフォルトのリンク動作を防止
-      const exerciseId = this.dataset.exerciseId; // データ属性からexerciseIdを取得
-      openAddModal(exerciseId); // モーダルを開く関数を呼び出し
+      openAddModal(this); // `this`は現在のボタンを指します。
     });
   });
-
-    // 追加ボタン用のモーダルを開く関数
-  window.openAddModal = function(exerciseId) {
-    // exerciseIdをモーダルの隠しフィールドに設定
+  
+  // 追加ボタン用のモーダルを開く関数
+  window.openAddModal = function(button) {
+    var exerciseId = button.dataset.exerciseId; // データ属性からexerciseIdを取得
     var modal = document.querySelector('#add-exercise-modal');
-    modal.querySelector('input[name="exercise_id"]').value = exerciseId;
-    // モーダルを表示
+    var exerciseIdField = modal.querySelector('#exercise_id_field');
+    exerciseIdField.value = exerciseId;
     modal.style.display = "block";
   }
 

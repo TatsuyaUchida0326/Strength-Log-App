@@ -5,7 +5,21 @@
       @exercise = Exercise.new
       @exercise.date = params[:date] if params[:date].present?
     end
+    
+    def add_existing
+      # 既存のトレーニング種目を複製して新しい日付で保存
+      original_exercise = Exercise.find(params[:exercise_id])
+      new_exercise = original_exercise.dup
+      new_exercise.date = params[:date]
   
+      if new_exercise.save
+        redirect_to exercises_path(date: new_exercise.date.strftime("%Y-%m-%d")), notice: 'トレーニングが追加されました。'
+      else
+        # ここではエラー時の挙動を適宜調整する必要があります
+        redirect_to exercises_path, alert: 'トレーニングの追加に失敗しました。'
+      end
+    end
+    
     def create
       if params[:exercise_id]
         # 既存のトレーニング種目を複製して新しい日付で保存
@@ -68,3 +82,4 @@
       params.require(:exercise).permit(:part, :exercise, :date) # 'date' を追加
     end
   end
+  

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :exercises, only: [:new, :create, :index, :destroy, :edit, :update] do
     collection do
       get :strength_log
+      post :add_existing
     end
   end
 end

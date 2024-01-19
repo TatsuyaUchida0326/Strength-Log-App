@@ -114,6 +114,19 @@
   }
 }
 
+.btn-add {
+  background-color: #28a745; // 緑色の背景
+  color: white;              // 白色の文字
+  padding: 5px 10px;         // パディング
+  text-decoration: none;     // テキストの下線を削除
+  border-radius: 5px;        // 角丸のデザイン
+  transition: all 0.2s;      // トランジション効果
+
+  &:hover {
+    background-color: #218838; // ホバー時に少し濃い緑色
+  }
+}
+
 .form-container {
   background-color: #f8f9fa; // 背景色
   padding: 20px;
