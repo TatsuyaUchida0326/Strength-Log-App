@@ -26,9 +26,11 @@
         original_exercise = Exercise.find(params[:exercise_id])
         @exercise = original_exercise.dup
         @exercise.date = params[:date]
+        @exercise.user = current_user # 現在のユーザーに関連付ける
       else
         # 新しいトレーニング種目を作成
         @exercise = Exercise.new(exercise_params)
+        @exercise.user = current_user # 現在のユーザーに関連付ける
       end
     
       if @exercise.save
@@ -39,10 +41,15 @@
     end
 
     def destroy
-      @exercise = Exercise.find(params[:id])
-      date_of_exercise = @exercise.date.strftime("%Y-%m-%d") # トレーニングの日付を取得
-      @exercise.destroy
-      redirect_to exercises_path(date: date_of_exercise), notice: 'エクササイズが削除されました。'
+      @exercise = current_user.exercises.find_by(id: params[:id])
+    
+      if @exercise
+        date_of_exercise = @exercise.date.strftime("%Y-%m-%d") # トレーニングの日付を取得
+        @exercise.destroy
+        redirect_to exercises_path(date: date_of_exercise), notice: 'エクササイズが削除されました。'
+      else
+        redirect_to exercises_path, alert: 'エクササイズが見つからないか、削除する権限がありません。'
+      end
     end
 
     def index
@@ -82,4 +89,5 @@
       params.require(:exercise).permit(:part, :exercise, :date) # 'date' を追加
     end
   end
+  
   
