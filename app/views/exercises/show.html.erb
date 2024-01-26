@@ -1,0 +1,24 @@
+<% provide(:title, 'トレーニング詳細') %>
+<div class="container mt-5">
+  <h2 class="text-center">トレーニング詳細 (<%= @exercise.date.strftime("%Y年 %m月 %d日") %>)</h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">種目</th>
+          <th scope="col">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @exercise.exercise %></td>
+          <td>
+            <%= link_to '削除', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %>
+            <%= link_to '編集', "#", class: 'btn btn-edit', data: { toggle: 'modal' }, onclick: "openModal('#modal-#{exercise.id}')" %>
+            <%= link_to '追加', '#', class: 'btn btn-add', data: { exercise_id: exercise.id }, onclick: "openAddModal(this)" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

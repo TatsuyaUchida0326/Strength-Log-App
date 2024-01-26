@@ -61,6 +61,10 @@
       end
     end
     
+    def show
+      @exercise = Exercise.find(params[:id])
+    end
+    
     def strength_log
       @exercises = Exercise.order(:part)
     end
