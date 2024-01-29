@@ -55,7 +55,7 @@
     def index
       if params[:date]
         @selected_date = params[:date].to_date
-        @exercises = Exercise.where(date: @selected_date)
+        @exercises = Exercise.where(date: @selected_date).distinct
       else
         @exercises = Exercise.all
       end

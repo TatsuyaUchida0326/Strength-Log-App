@@ -11,8 +11,7 @@
     </div>
   <% end %>
 <% else %>
-  <% unique_exercises = @exercises.uniq { |e| e.exercise } %>
-  <% unique_exercises.group_by(&:part).each do |part, exercises| %>
+  <% @exercises.group_by(&:part).each do |part, exercises| %>
     <h2 class="part-title" data-toggle="collapse" data-target="#exercises-for-<%= part %>"><%= part %></h2>
 
     <div id="exercises-for-<%= part %>" class="collapse">
@@ -20,22 +19,66 @@
         <thead>
           <tr>
             <th class="exercise-name">種目</th>
+            <% if @selected_date.present? %>
+              <th>セット</th>
+              <th>重量</th>
+              <th>回数</th>
+            <% end %>
             <th class="exercise-actions">操作</th>
           </tr>
         </thead>
         <tbody>
-          <% exercises.each do |exercise| %>
+          <% exercises.uniq { |e| e.exercise }.each do |exercise| %>
             <tr>
               <td><%= exercise.exercise %></td>
+              <% if @selected_date.present? %>
+                <td> <!-- セットのデータ表示 --></td>
+                <td> <!-- 重量のデータ表示 --></td>
+                <td> <!-- 回数のデータ表示 --></td>
+              <% end %>
               <td>
-                <!-- <%= link_to '削除', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %> -->
-                <%= link_to '編集', "#", class: 'btn btn-edit', data: { toggle: 'modal' }, onclick: "openModal('#modal-#{exercise.id}')" %>
-                <%= link_to '追加', '#', class: 'btn btn-add', data: { exercise_id: exercise.id }, onclick: "openAddModal(this)" %>
+                <% if @selected_date.nil? %>
+                  <!-- 特定の日付が選択されていない場合のみ追加ボタンを表示 -->
+                  <%= link_to '追加', '#', class: 'btn btn-add', data: { exercise_id: exercise.id }, onclick: "openAddModal(this)" %>
+                <% else %>
+                  <!-- 特定の日付が選択されている場合は追加、削除、編集ボタンを表示 -->
+                  <%= link_to '削除', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %>
+                  <%= link_to '編集', "#", class: 'btn btn-edit', data: { toggle: 'modal' }, onclick: "openModal('#modal-#{exercise.id}')" %>
+                  <%= link_to '追加', '#', class: 'btn btn-add', data: { exercise_id: exercise.id }, onclick: "openAddModal(this)" %>
+                <% end %>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
+    </div>
+  <% end %>
+
+  <% @exercises.each do |exercise| %>
+    <!-- モーダルの定義 -->
+    <div class="modal" id="modal-<%= exercise.id %>" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">種目名の編集： <%= exercise.exercise %></h4>
+            <button type="button" class="close" onclick="closeModal('#modal-<%= exercise.id %>')">&times;</button>
+          </div>
+          <div class="modal-body">
+            <!-- 編集フォーム -->
+            <%= form_with(model: exercise, local: true) do |form| %>
+              <div class="form-group">
+                <%= form.label :exercise, "種目名" %>
+                <%= form.text_field :exercise, class: 'form-control' %>
+              </div>
+              <!-- 保存ボタン -->
+              <%= form.submit "保存", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('#modal-<%= exercise.id %>')">閉じる</button>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
 <% end %>

@@ -1,25 +1,9 @@
 <div class="training-tags" data-controller="training">
   <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a class="nav-link active" href="#" data-action="click->training#setActive" data-target="all">ALL</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" data-action="click->training#setActive" data-target="legs">脚</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" data-action="click->training#setActive" data-target="back">背中</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" data-action="click->training#setActive" data-target="chest">胸</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" data-action="click->training#setActive" data-target="shoulders">肩</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" data-action="click->training#setActive" data-target="arms">腕</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" data-action="click->training#setActive" data-target="abs">お腹</a>
-    </li>
+    <% @parts.each do |part| %>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-action="click->training#setActive" data-target="<%= part %>"><%= part %></a>
+      </li>
+    <% end %>
   </ul>
 </div>
