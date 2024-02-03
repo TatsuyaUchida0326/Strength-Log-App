@@ -190,3 +190,14 @@
   margin-left: 5px; /* テキストの左側に少しスペースを追加 */
   display: inline-block; /* インラインブロック要素として表示 */
 }
+
+.btn-orange {
+  background-color: orange;
+  border-color: orange; /* ボーダーカラーもオレンジに設定 */
+
+  &:hover {
+    background-color: darken(orange, 8%); /* ホバー時の背景色を少し暗くする */
+    border-color: darken(orange, 10%); /* ホバー時のボーダーカラーも同様に */
+    filter: grayscale(30%); /* グレースケール効果を適用 */
+  }
+}

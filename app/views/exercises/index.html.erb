@@ -29,19 +29,21 @@
           </thead>
           <tbody>
             <% exercises.uniq { |e| e.exercise }.each do |exercise| %>
-              <tr>
-                <td>
-                  <%= link_to exercise.exercise, exercise_path(exercise) %>
-                </td>
-                <td class="set-column"> <!-- セットのデータ表示 --></td>
-                <td class="weight-column"> <!-- 重量のデータ表示 --></td>
-                <td class="reps-column"> <!-- 回数のデータ表示 --></td>
-                <td class="one-rm-column"> <!-- 1RMのデータ表示 --></td>
-                <td class="exercise-actions-column">
-                  <%= link_to '削除', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %>
-                  <%= link_to '編集', "#", class: 'btn btn-edit', data: { toggle: 'modal' }, onclick: "openModal('#modal-#{exercise.id}')" %>
-                </td>
-              </tr>
+              <% exercise.training_records.each do |record| %>
+                <tr>
+                  <td>
+                    <%= link_to exercise.exercise, exercise_path(exercise) %>
+                  </td>
+                  <td class="set-column"><%= record.set_number %></td>
+                  <td class="weight-column"><%= record.weight %></td>
+                  <td class="reps-column"><%= record.reps %></td>
+                  <td class="one-rm-column"><%= record.one_rm %></td>
+                  <td class="exercise-actions-column">
+                    <%= link_to '削除', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %>
+                    <%= link_to '編集', "#", class: 'btn btn-edit', data: { toggle: 'modal' }, onclick: "openModal('#modal-#{exercise.id}')" %>
+                  </td>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
         </table>

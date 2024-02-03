@@ -44,6 +44,16 @@
         render :new
       end
     end
+    
+    def update
+      @exercise = Exercise.find(params[:id])
+      if @exercise.update(exercise_params)
+        date_of_exercise = @exercise.date.strftime("%Y-%m-%d") # トレーニングの日付を取得
+        redirect_to exercises_path(date: date_of_exercise), notice: '種目が更新されました。'
+      else
+        render :edit
+      end
+    end
 
     def destroy
       @exercise = current_user.exercises.find_by(id: params[:id])
@@ -77,16 +87,6 @@
     def edit
       @exercise = Exercise.find(params[:id])
     end
-    
-    def update
-      @exercise = Exercise.find(params[:id])
-      if @exercise.update(exercise_params)
-        date_of_exercise = @exercise.date.strftime("%Y-%m-%d") # トレーニングの日付を取得
-        redirect_to exercises_path(date: date_of_exercise), notice: '種目が更新されました。'
-      else
-        render :edit
-      end
-    end
 
     private
     
@@ -95,7 +95,12 @@
     end
     # Strong Parametersを使用して安全にパラメータを取り扱う
     def exercise_params
-      params.require(:exercise).permit(:part, :exercise, :date) # 'date' を追加
+      params.require(:exercise).permit(
+        :part, 
+        :exercise, 
+        :date, 
+        training_records_attributes: [:id, :weight, :reps, :comment]
+      )
     end
   end
   

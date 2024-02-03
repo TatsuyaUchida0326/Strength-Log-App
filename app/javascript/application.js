@@ -2,7 +2,10 @@ import "@hotwired/turbo-rails";
 
 // 1RMを計算する関数
 window.calculateOneRM = function(weight, reps) {
-  return (weight * (reps / 40)) + weight;
+  if (reps === 1) {
+    return weight;
+  }
+    return (weight * (reps / 40)) + weight;
 };
 
 // 入力値が変更されたときに1RMを計算し更新する関数
