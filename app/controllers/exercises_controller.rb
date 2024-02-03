@@ -7,15 +7,20 @@
     end
     
     def add_existing
-      # 既存のトレーニング種目を複製して新しい日付で保存
-      original_exercise = Exercise.find(params[:exercise_id])
+      original_exercise = Exercise.find_by(id: params[:exercise_id])
+    
+      # トレーニング種目が見つからない場合の処理
+      unless original_exercise
+        redirect_to exercises_path, alert: '指定されたトレーニング種目が見つかりません。'
+        return
+      end
+    
       new_exercise = original_exercise.dup
       new_exercise.date = params[:date]
-  
+    
       if new_exercise.save
         redirect_to exercises_path(date: new_exercise.date.strftime("%Y-%m-%d")), notice: 'トレーニングが追加されました。'
       else
-        # ここではエラー時の挙動を適宜調整する必要があります
         redirect_to exercises_path, alert: 'トレーニングの追加に失敗しました。'
       end
     end
@@ -55,7 +60,7 @@
     def index
       if params[:date]
         @selected_date = params[:date].to_date
-        @exercises = Exercise.where(date: @selected_date).distinct
+        @exercises = Exercise.where(date: @selected_date)
       else
         @exercises = Exercise.all
       end

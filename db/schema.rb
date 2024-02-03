@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_28_071937) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_01_062306) do
   create_table "exercises", force: :cascade do |t|
     t.string "part"
     t.string "exercise"
@@ -26,6 +26,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_28_071937) do
     t.index ["user_id"], name: "index_exercises_on_user_id"
   end
 
+  create_table "training_records", force: :cascade do |t|
+    t.integer "set"
+    t.decimal "weight"
+    t.integer "reps"
+    t.decimal "one_rm"
+    t.integer "exercise_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_training_records_on_exercise_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -37,4 +48,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_28_071937) do
   end
 
   add_foreign_key "exercises", "users"
+  add_foreign_key "training_records", "exercises"
 end

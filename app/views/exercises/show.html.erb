@@ -1,0 +1,38 @@
+<%# トレーニング種目の詳細情報を表示 %>
+<h2><%= @exercise.name %></h2>
+<p>部位: <%= @exercise.part %></p>
+<p>種目名: <%= @exercise.exercise %></p>
+
+<%# トレーニング記録のテーブル %>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>セット</th>
+      <th>重量(kg)</th>
+      <th>回数</th>
+      <th>1RM(kg)</th>
+      <th>備考</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%# 既存のデータを表示 %>
+    <% @exercise.training_records.each_with_index do |record, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><input type="number" name="weight[]" class="input-centered" oninput="updateOneRM(this)"></td>
+        <td><input type="number" name="reps[]" class="input-centered" oninput="updateOneRM(this)"></td>
+        <td class="one-rm-output"></td>
+        <td><input type="text" name="comment[]"></td>
+        <td>
+          <% if index == @exercise.training_records.size - 1 %>
+            <button class="remove-btn" onclick="removeTrainingRecordRow(this)">削除</button>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%# 追加ボタン %>
+<button onclick="addTrainingRecordRow()">行を追加</button>

@@ -128,3 +128,65 @@
   color: red;
   margin-left: 5px;
 }
+
+.training-record-fields {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); // 5等分の列を作成
+  gap: 10px; // 列間のギャップ
+}
+
+.training-record-fields input {
+  border: 1px solid #000; // 黒いボーダーを指定
+  text-align: center;
+}
+
+.training-record-fields button {
+  grid-column: span 1; // ボタンが列を1つ占めるように指定
+}
+
+// 最後の削除ボタンは、表示されていないので、以下のスタイルを追加
+.remove-record {
+  display: inline-block; // または 'block' に設定して、ボタンが表示されるようにします。
+}
+
+// 'セットを追加'ボタンのスタイル
+#add-record {
+  width: 40%;
+  padding: 10px;
+  margin-top: 20px; // 適切な間隔を設定
+}
+
+/* ラベル行全体のスタイリング */
+.labels-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; /* 下マージンを適切に調整 */
+}
+
+/* 個々のラベルのスタイリング */
+.label {
+  flex: 1; /* 各ラベルが均等なスペースを取るように */
+  text-align: center; /* テキストを中央揃えに */
+  font-weight: bold; /* テキストを太字に */
+}
+
+.col-1 {
+  width: 100px; // または必要な幅に設定
+}
+
+.table.table-bordered td,
+.table.table-bordered th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* 重量と回数の入力フィールドのスタイル */
+.input-centered {
+  text-align: center;
+}
+
+.unit-text {
+  margin-left: 5px; /* テキストの左側に少しスペースを追加 */
+  display: inline-block; /* インラインブロック要素として表示 */
+}

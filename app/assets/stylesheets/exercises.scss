@@ -40,6 +40,22 @@
     padding: 12px 15px;
     text-align: center; // セルを中央揃えに変更
     border-right: 5px solid #ddd; // 右側に境界線を追加
+    
+    &.set-column {
+      @extend .set-column;
+    }
+
+    &.weight-column {
+      @extend .weight-column;
+    }
+
+    &.reps-column {
+      @extend .reps-column;
+    }
+
+    &.one-rm-column {
+      @extend .one-rm-column;
+    }
   }
 
   th:first-child {
@@ -370,10 +386,33 @@
   color: #333333; /* 濃いグレーの文字色 */
 }
 
-.exercise-name {
-  width: 70%; /* 種目のセルの幅を設定 */
+// 一般的な一覧表（general-table）のスタイル
+.general-table {
+  .exercise-name-column {
+    width: 70%; // 種目列の幅を70%に設定
+    // 他の必要なスタイル
+  }
+
+  .exercise-actions-column {
+    width: 30%; // 操作列の幅を30%に設定
+    // 他の必要なスタイル
+  }
 }
 
-.exercise-actions {
-  width: 30%; /* 操作のセルの幅を設定 */
+// 特定の日付に保存されるテーブル（date-specific-table）のスタイル
+.date-specific-table {
+  .exercise-name-column {
+    width: 40%; // 種目列の幅を60%に設定
+    // 他の必要なスタイル
+  }
+
+  .set-column, .weight-column, .reps-column, .one-rm-column {
+    width: 10%; // 各列の幅を5%に設定
+    text-align: center; // 中央揃え
+  }
+
+  .exercise-actions-column {
+    width: 20%; // 操作列の幅を20%に設定
+    // 他の必要なスタイル
+  }
 }
