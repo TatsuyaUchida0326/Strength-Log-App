@@ -1,9 +1,0 @@
-<div class="training-tags" data-controller="training">
-  <ul class="nav nav-pills">
-    <% @parts.each do |part| %>
-      <li class="nav-item">
-        <a class="nav-link" href="#" data-action="click->training#setActive" data-target="<%= part %>"><%= part %></a>
-      </li>
-    <% end %>
-  </ul>
-</div>

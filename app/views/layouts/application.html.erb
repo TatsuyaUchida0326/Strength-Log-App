@@ -5,10 +5,11 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_importmap_tags %>
-    <%= render 'layouts/shim' %>
 
     <!-- Font AwesomeのCDNリンクを追加 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    <%= render 'layouts/shim' %>
   </head>
   <body>
     <%= render 'layouts/header' %>

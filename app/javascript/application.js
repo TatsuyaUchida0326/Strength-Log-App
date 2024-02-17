@@ -1,75 +1,8 @@
 import "@hotwired/turbo-rails";
 
-// 1RMを計算する関数
-window.calculateOneRM = function(weight, reps) {
-  if (reps === 1) {
-    return weight;
-  }
-    return (weight * (reps / 40)) + weight;
-};
-
-// 入力値が変更されたときに1RMを計算し更新する関数
-window.updateOneRM = function(inputElement) {
-  var row = inputElement.parentNode.parentNode;
-  var weight = row.querySelector('input[name="weight[]"]').value;
-  var reps = row.querySelector('input[name="reps[]"]').value;
-
-  if (weight && reps) {
-    var oneRM = window.calculateOneRM(parseFloat(weight), parseInt(reps));
-    row.querySelector('.one-rm-output').textContent = oneRM.toFixed(2) + ' kg';
-  }
-};
-
-window.setExerciseId = function(exerciseId) {
-  console.log(exerciseId); // コンソールにIDを出力する
-  document.getElementById("exercise_id_field").value = exerciseId;
-};
-
-// 現在のセット数を追跡する変数
-window.currentSetNumber = 1;
-
-// 新しいトレーニング記録の行を追加する関数
-window.addTrainingRecordRow = function() {
-  var table = document.querySelector('.table.table-bordered tbody');
-  
-  // 既存のすべての削除ボタンを取り除く
-  var existingButtons = table.querySelectorAll('button.remove-btn');
-  existingButtons.forEach(function(button) {
-    button.remove();
-  });
-
-  // 新しい行を作成
-  var newRow = document.createElement('tr');
-  newRow.innerHTML = '<td>' + window.currentSetNumber + '</td>' +
-                     '<td><input type="number" name="weight[]" class="input-centered" oninput="updateOneRM(this)"><span class="unit-text">kg</span></td>' +
-                     '<td><input type="number" name="reps[]" class="input-centered" oninput="updateOneRM(this)"><span class="unit-text">回</span></td>' +
-                     '<td class="one-rm-output"></td>' + // 1RMの計算結果を表示する部分
-                     '<td><input type="text" name="comment[]"></td>' +
-                     '<td><button class="remove-btn" onclick="removeTrainingRecordRow(this)">削除</button></td>';
-  table.appendChild(newRow);
-  window.currentSetNumber++; // セット数をインクリメント
-};
-
-// 指定された行を削除する関数
-window.removeTrainingRecordRow = function(button) {
-  var row = button.parentNode.parentNode;
-  var tbody = row.parentNode;
-  tbody.removeChild(row);
-  window.currentSetNumber--; // セット数をデクリメント
-
-  // 削除後の最後尾に削除ボタンを追加する
-  var lastRow = tbody.querySelector('tr:last-child');
-  if (lastRow) {
-    var lastCell = lastRow.querySelector('td:last-child');
-    lastCell.innerHTML = '<button class="remove-btn" onclick="removeTrainingRecordRow(this)">削除</button>';
-  }
-};
-
 document.addEventListener('turbo:load', () => {
-  // 既存のドロップダウン初期化コード
   $('[data-toggle="dropdown"]').dropdown();
   
-  // 既存の日付更新機能
   function updateDate() {
     const now = new Date();
     const today = now.toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo" });
@@ -79,115 +12,214 @@ document.addEventListener('turbo:load', () => {
     }
   }
 
-  updateDate(); // ページ読み込み時に日付を更新
-  setInterval(updateDate, 60000); // 1分ごとに日付を更新
+  updateDate();
+  setInterval(updateDate, 60000);
 
-  // アコーディオン機能の追加
+  // アコーディオンの動作
   document.querySelectorAll('.part-title').forEach(title => {
     title.addEventListener('click', function(event) {
-      event.stopPropagation(); // イベント伝播を停止
+      event.stopPropagation();
       const targetId = this.getAttribute('data-target');
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
-        // 開いている場合は閉じる、閉じている場合は開く
         targetElement.classList.toggle('collapse');
+        localStorage.setItem(targetId, targetElement.classList.contains('collapse') ? 'closed' : 'open');
       }
     });
   });
 
-  // モーダルを開く関数
-  window.openModal = function(modalId) {
-    var modal = document.querySelector(modalId);
-    modal.style.display = "block";
+  document.querySelectorAll('.part-title').forEach(title => {
+    const targetId = title.getAttribute('data-target');
+    const targetElement = document.querySelector(targetId);
+    const state = localStorage.getItem(targetId);
+    if (state === 'open') {
+      targetElement.classList.remove('collapse');
+    } else if (state === 'closed') {
+      targetElement.classList.add('collapse');
+    }
+  });
+  
+  // 既存および新規の削除ボタンにイベントリスナーを追加する
+  addRemoveRecordEventListener();
+  
+  // 新しいトレーニングレコードの行を追加する機能
+  const addRecordButton = document.getElementById('add-record');
+  if (addRecordButton) {
+    addRecordButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tbody = document.getElementById('training-records');
+      // 非表示にされていない行だけを対象にする
+      const visibleRows = tbody.querySelectorAll('tr:not([style*="display: none"])');
+      let newIndex = visibleRows.length; // 新しいインデックスは非表示にされていない行の数に基づく
+  
+      // 1RMの計算結果を表示するセルも含めた新しい行を追加
+      const newRow = `
+        <tr>
+          <td>${newIndex + 1}</td>
+          <td><input type="number" name="exercise[training_records_attributes][${newIndex}][weight]" class="form-control weight-input" /></td>
+          <td><input type="number" name="exercise[training_records_attributes][${newIndex}][reps]" class="form-control reps-input" /></td>
+          <td>
+            <input type="hidden" name="exercise[training_records_attributes][${newIndex}][one_rm]" class="form-control one-rm-input" />
+            <span class="one-rm-result"><!-- 1RMの計算結果がここに表示されます --></span>
+          </td>
+          <td><input type="text" name="exercise[training_records_attributes][${newIndex}][comment]" class="form-control" /></td>
+          <td>
+            <input type="hidden" name="exercise[training_records_attributes][${newIndex}][_destroy]" id="exercise_training_records_attributes_${newIndex}__destroy" value="0" class="destroy-flag">
+            <button type="button" class="btn btn-danger remove-record"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+      `;
+      tbody.insertAdjacentHTML('beforeend', newRow);
+      addRemoveRecordEventListener(); // 削除ボタンにイベントリスナーを再設定
+      updateOneRMEventListener(); // 1RM計算機能のイベントリスナーを更新
+    });
   }
 
-  // モーダルを閉じる関数
-  window.closeModal = function(modalId) {
-    var modal = document.querySelector(modalId);
-    modal.style.display = "none";
+  function addRemoveRecordEventListener() {
+    document.querySelectorAll('.remove-record').forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault(); // デフォルトの動作を防ぐ
+  
+        const row = this.closest('tr');
+        const tbody = row.closest('tbody');
+        const destroyInput = row.querySelector('.destroy-flag');
+        if (destroyInput) {
+          destroyInput.value = "1"; // _destroy フィールドを "1" に設定
+        }
+        row.style.display = 'none'; // 行を非表示にする
+  
+        // 行が削除された後にセット番号を更新する
+        updateSetNumbers(tbody);
+      });
+    });
   }
- 
-  // ウィンドウの外側をクリックしたときにモーダルを閉じる
-  window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-      event.target.style.display = "none";
+  
+  function updateSetNumbers(tbody) {
+    // 非表示になっていない行のみを対象にセット番号を更新
+    const visibleRows = tbody.querySelectorAll('tr:not([style*="display: none"])');
+    visibleRows.forEach((row, index) => {
+      const setNumberCell = row.querySelector('td:first-child');
+      if (setNumberCell) {
+        setNumberCell.textContent = index + 1; // セット番号を1から順に更新
+      }
+    });
+  }
+
+  // 重量と回数の入力に基づいて1RMを計算し、表示する機能を更新する
+  function updateOneRMEventListener() {
+    document.querySelectorAll('.weight-input, .reps-input').forEach(input => {
+      input.removeEventListener('input', calculateAndDisplayOneRM); // 既存のイベントリスナーを削除
+      input.addEventListener('input', calculateAndDisplayOneRM); // 新しいイベントリスナーを追加
+    });
+  }
+
+  // 重量と回数から1RMを計算し、結果を表示する関数
+  function calculateAndDisplayOneRM() {
+    const row = this.closest('tr');
+    const weight = parseFloat(row.querySelector('.weight-input').value) || 0;
+    const reps = parseInt(row.querySelector('.reps-input').value) || 0;
+    // 新しい1RMの計算式に変更
+    let oneRMResult = (weight * reps / 40) + weight;
+    // 小数点第1位まで切り捨てる処理
+    oneRMResult = Math.floor(oneRMResult * 10) / 10;
+    // 表示用のspanタグに計算結果を表示
+    const resultDisplay = row.querySelector('.one-rm-result');
+    if (resultDisplay) {
+      resultDisplay.textContent = oneRMResult; // toFixed(2)を使用しない
+    }
+    // hiddenフィールドに計算結果を設定
+    const oneRmInput = row.querySelector('.one-rm-input');
+    if (oneRmInput) {
+      oneRmInput.value = oneRMResult; // 計算結果をhiddenフィールドにも設定
     }
   }
+  
+  function openEditModal(exerciseId) {
+    // モーダルのID形式に注意してください。IDのプレフィックスが必要な場合は適宜調整してください。
+    const modalSelector = `#modal-${exerciseId}`;
+    openModal(modalSelector);
+  }
 
-  // フラッシュメッセージを非表示にする機能の追加
+  function openModal(modalSelector) {
+    const modal = document.querySelector(modalSelector);
+    if (modal) {
+      modal.style.display = 'block';
+    }
+  }
+  
+  // モーダルの背景クリックで閉じる処理を追加
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', function(event) {
+      // クリックされた要素がモーダル自体なら閉じる
+      // (モーダルのコンテンツ部分のクリックは無視)
+      if (event.target === modal) {
+        closeModal(`#${modal.id}`);
+      }
+    });
+  });
+
+  // モーダルウィンドウを開く関数
+  function openModal(modalSelector) {
+      const modal = document.querySelector(modalSelector);
+      if (modal) {
+          modal.style.display = 'block';
+          // モーダルウィンドウ外のクリックを検知して閉じるイベントリスナーを追加
+          window.addEventListener('click', function(event) {
+              if (event.target == modal) {
+                  closeModal(modalSelector);
+              }
+          });
+      }
+  }
+
+  // 既存トレーニング種目のIDをセットしてモーダルを開く関数
+  window.setExerciseId = function(exerciseId) {
+    const hiddenField = document.getElementById('exercise_id');
+    if (hiddenField) {
+      hiddenField.value = exerciseId;
+    }
+    openModal('#add-exercise-modal');
+  };
+
+  // フラッシュメッセージを非表示にする機能
   document.addEventListener('click', () => {
     document.querySelectorAll('.alert').forEach(alert => {
       alert.style.display = 'none';
     });
   });
+});
 
-  // 新しいセットを追加するボタンにイベントリスナーを設定
-  const addRecordButton = document.querySelector('#add-record');
-  if (addRecordButton) {
-    addRecordButton.addEventListener('click', () => {
-      const recordsContainer = document.querySelector('#training-records');
-      const allRecords = recordsContainer.querySelectorAll('.training-record-fields');
-      const newSetNumber = allRecords.length + 1; // 新しいセット番号
-      let newRecordFields = document.querySelector('.training-record-fields').cloneNode(true);
-
-      // 新しいセット番号を設定
-      let setField = newRecordFields.querySelector('input[id="set"]');
-      setField.value = newSetNumber;
-      setField.id = `set-${newSetNumber}`;
-
-      // 新しいレコードフィールドにユニークなIDを与えます
-      newRecordFields.querySelectorAll('input').forEach(input => {
-        const inputType = input.id.replace(/-\d+$/, '');
-        input.id = `${inputType}-${newSetNumber}`; // 新しいID
-        if (inputType !== 'set') {
-          input.value = ''; // セット番号以外は空にする
-        }
-      });
-
-      // 新しいレコードフィールドを追加
-      recordsContainer.appendChild(newRecordFields);
-
-      // 既存のすべての削除ボタンを非表示にする
-      document.querySelectorAll('.remove-record').forEach(button => {
-        button.style.display = 'none';
-      });
-
-      // 新しいレコードの削除ボタンを表示
-      newRecordFields.querySelector('.remove-record').style.display = 'inline-block';
-    });
+// グローバルスコープでの関数定義
+window.openModal = function(modalSelector) {
+  const modal = document.querySelector(modalSelector);
+  if (modal) {
+    modal.style.display = 'block';
   }
-  
-  document.querySelectorAll('.btn-add').forEach(button => {
-    button.addEventListener('click', (event) => {
-      event.preventDefault(); // デフォルトの動作を停止
-      const modalId = '#add-exercise-modal';
-      openModal(modalId); // モーダルを開く
-    });
-  });
-  
-  function setExerciseId(exerciseId) {
-      console.log(exerciseId); // 追加したログ出力
-      document.getElementById("exercise_id_field").value = exerciseId;
+};
+
+window.closeModal = function(modalSelector) {
+  const modal = document.querySelector(modalSelector);
+  if (modal) {
+    modal.style.display = 'none';
   }
+};
 
-  // レコードの削除ボタンにイベントリスナーを設定
-  document.addEventListener('click', (event) => {
-    if (event.target.matches('.remove-record')) {
-      event.target.closest('.training-record-fields').remove();
+// 既存トレーニング種目のIDをセットしてモーダルを開く関数
+window.setExerciseId = function(exerciseId) {
+  const hiddenField = document.getElementById('exercise_id');
+  if (hiddenField) {
+    hiddenField.value = exerciseId;
+  }
+  window.openModal(`#modal-${exerciseId}`);
+};
 
-      // 削除後に最後のレコードの削除ボタンを表示する
-      const allRecords = document.querySelectorAll('.training-record-fields');
-      if (allRecords.length > 0) {
-        // 以前の最後のレコードの削除ボタンを非表示にする
-        allRecords.forEach((record, index) => {
-          if (index !== allRecords.length - 1) {
-            record.querySelector('.remove-record').style.display = 'none';
-          } else {
-            record.querySelector('.remove-record').style.display = 'inline-block';
-          }
-        });
-      }
-    }
-  });
+// モーダル外の領域をクリックしたときにモーダルを閉じる処理
+window.addEventListener('click', function(event) {
+  // アクティブなモーダルを取得
+  const activeModal = document.querySelector('.modal.show');
+  if (activeModal && !activeModal.contains(event.target)) {
+    // モーダルの内容を含まないクリックの場合、モーダルを閉じる
+    activeModal.style.display = 'none';
+  }
 });
 

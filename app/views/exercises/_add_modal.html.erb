@@ -1,0 +1,23 @@
+<!-- トレーニング追加用モーダル -->
+<div class="modal" id="add-exercise-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">トレーニングを追加</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_with(url: add_existing_exercises_path, method: :post, local: true) do |form| %>
+          <div class="form-group">
+            <%= form.label :date, "日付" %>
+            <%= form.date_field :date, class: 'form-control', value: Date.today.to_s %>
+            <%= form.hidden_field :exercise_id, id: "exercise_id" %>
+          </div>
+          <%= form.submit "追加する", class: "btn btn-primary" %>
+        <% end %>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('#add-exercise-modal')">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

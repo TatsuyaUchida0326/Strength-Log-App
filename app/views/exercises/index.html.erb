@@ -1,7 +1,7 @@
 <% if @selected_date %>
-  <div class="date-display">
-    <h2 class="text-center date-title"><%= @selected_date.strftime("%Y年 %m月 %d日") %></h2>
-  </div>
+<div class="date-display">
+  <h2 class="text-center date-title"><%= @selected_date.strftime("%Y年 %m月 %d日") %></h2>
+</div>
 <% end %>
 
 <% if @exercises.empty? %>
@@ -16,39 +16,52 @@
 
     <div id="exercises-for-<%= part %>" class="collapse">
       <% if @selected_date.present? %>
-        <table class="styled-table date-specific-table">
+        <table class="styled-table date-specific-table table table-bordered">
           <thead>
             <tr>
               <th class="exercise-name-column">種目</th>
               <th class="set-column">セット</th>
-              <th class="weight-column">重量</th>
+              <th class="weight-column">重量(㎏)</th>
               <th class="reps-column">回数</th>
-              <th class="one-rm-column">1RM</th>
+              <th class="one-rm-column">1RM(㎏)</th>
               <th class="exercise-actions-column">操作</th>
             </tr>
           </thead>
           <tbody>
             <% exercises.uniq { |e| e.exercise }.each do |exercise| %>
-              <% exercise.training_records.each do |record| %>
-                <tr>
-                  <td>
-                    <%= link_to exercise.exercise, exercise_path(exercise) %>
-                  </td>
-                  <td class="set-column"><%= record.set_number %></td>
-                  <td class="weight-column"><%= record.weight %></td>
-                  <td class="reps-column"><%= record.reps %></td>
-                  <td class="one-rm-column"><%= record.one_rm %></td>
-                  <td class="exercise-actions-column">
-                    <%= link_to '削除', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %>
-                    <%= link_to '編集', "#", class: 'btn btn-edit', data: { toggle: 'modal' }, onclick: "openModal('#modal-#{exercise.id}')" %>
-                  </td>
-                </tr>
-              <% end %>
+              <tr>
+                <td>
+                  <%= link_to exercise.exercise, exercise_path(exercise) %>
+                </td>
+                <td class="set-column">
+                  <% exercise.training_records.each_with_index do |record, index| %>
+                    <%= index + 1 %><br>
+                  <% end %>
+                </td>
+                <td class="weight-column">
+                  <% exercise.training_records.each do |record| %>
+                    <%= record.weight %><br>
+                  <% end %>
+                </td>
+                <td class="reps-column">
+                  <% exercise.training_records.each do |record| %>
+                    <%= record.reps %><br>
+                  <% end %>
+                </td>
+                <td class="one-rm-column">
+                  <% exercise.training_records.each do |record| %>
+                    <%= record.one_rm %><br>
+                  <% end %>
+                </td>
+                <td class="exercise-actions-column">
+                  <%= link_to ' 削 除 ', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %>
+                </td>
+              </tr>
             <% end %>
           </tbody>
         </table>
       <% else %>
-        <table class="styled-table general-table">
+        <table class="styled-table general-table table table-bordered">
           <thead>
             <tr>
               <th class="exercise-name-column">種目</th>
@@ -61,6 +74,7 @@
                 <td><%= exercise.exercise %></td>
                 <td class="exercise-actions-column">
                   <%= link_to '追加', '#', class: 'btn btn-add', onclick: "setExerciseId(#{exercise.id})", data: { toggle: 'modal' } %>
+                  <%= link_to '編集', "#", class: 'btn btn-edit', data: { toggle: 'modal' }, onclick: "openModal('#modal-#{exercise.id}')" %>
                 </td>
               </tr>
             <% end %>
@@ -71,52 +85,5 @@
   <% end %>
 <% end %>
 
-<% @exercises.each do |exercise| %>
-  <!-- モーダルの定義 -->
-  <div class="modal" id="modal-<%= exercise.id %>" style="display: none;">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">種目名の編集： <%= exercise.exercise %></h4>
-          <button type="button" class="close" onclick="closeModal('#modal-<%= exercise.id %>')">&times;</button>
-        </div>
-        <div class="modal-body">
-          <!-- 編集フォーム -->
-          <%= form_with(model: exercise, local: true) do |form| %>
-            <div class="form-group">
-              <%= form.label :exercise, "種目名" %>
-              <%= form.text_field :exercise, class: 'form-control' %>
-            </div>
-            <!-- 保存ボタン -->
-            <%= form.submit "保存", class: "btn btn-primary" %>
-          <% end %>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onclick="closeModal('#modal-<%= exercise.id %>')">閉じる</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<% end %>
-
-<!-- トレーニング追加用モーダル -->
-<div class="modal" id="add-exercise-modal" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">トレーニングを追加</h4>
-        <button type="button" class="close" onclick="closeModal('#add-exercise-modal')">&times;</button>
-      </div>
-      <div class="modal-body">
-        <%= form_with(url: add_existing_exercises_path, method: :post, local: true) do |form| %>
-          <div class="form-group">
-            <%= form.label :date, "日付" %>
-            <%= form.date_field :date, class: 'form-control', value: Date.today.to_s %>
-            <%= form.hidden_field :exercise_id, id: "exercise_id_field" %>
-          </div>
-          <%= form.submit "追加する", class: "btn btn-primary" %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'edit_modal' %>
+<%= render 'add_modal' %>

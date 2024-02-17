@@ -1,5 +1,4 @@
 <% provide(:title, @user.name) %>
-<%= render 'training_tags' %>
 
 <div class="calendar-navigation">
   <%= link_to '◀', user_path(@user, month: @date.prev_month), class: 'nav-arrow' %>
