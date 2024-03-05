@@ -1,6 +1,18 @@
 <% provide(:title, "Top") %>
-<div class="center jumbotron">
-  <h1>♠Strength Log App♠</h1>
-    <p>◆トレーニング記録を管理するアプリケーション◆</p>
-    <%= link_to "ユーザー登録", signup_path, class: "btn btn-lg btn-primary" %>
+<div class="center jumbotron jumbotron-container">
+  <h1 class="app-title">♠Strength Log App♠</h1>
+  <p class="app-description">◆トレーニング記録を管理するアプリケーション◆</p>
+  <% if @weather && @weather['weather'].present? %>
+    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+      <div class="weather-info-container">
+        <span class="weather-label">本日の天気</span>
+        <img src="https://openweathermap.org/img/wn/<%= @weather['weather'][0]['icon'] %>.png" alt="Weather icon" class="weather-icon">
+        <p class="weather-condition">状況: <%= @weather['weather'][0]['description'] %></p>
+        <p class="weather-temperature">温度: <%= @weather['main']['temp'] %>℃</p>
+      </div>
+    </div>
+  <% end %>
+  <div class="user-new">
+    <%= link_to "ユーザー登録", signup_path, class: "btn btn-lg btn-primary signup-button" %>
+  </div>
 </div>

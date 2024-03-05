@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_05_025310) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_03_064648) do
   create_table "exercises", force: :cascade do |t|
     t.string "part"
     t.string "exercise"
@@ -45,7 +45,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_05_025310) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "remember_digest"
+    t.string "line_user_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["line_user_id"], name: "index_users_on_line_user_id", unique: true
   end
 
   add_foreign_key "exercises", "users"

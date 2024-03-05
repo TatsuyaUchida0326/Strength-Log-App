@@ -16,3 +16,181 @@
   }
 }
 
+.user-new {
+  transform: translateX(-80px) translateY(-10px);
+}
+
+.signup-button {
+  position: relative;
+  transform: translateX(88px) translateY(140px);
+  height: 45px; // 高さ設定
+  width: 20%; // 
+  line-height: center;
+  font-size: 20px;
+}
+
+.line-login {
+  transform: translateX(90px) translateY(108px);
+  width: 50%; // 幅設定
+}
+
+.line-signup-button {
+  background-color: #00C300; /* LINEの緑色 */
+  color: #fff; // テキストの色を白に設定
+  position: relative;
+  transform: translateX(180px) translateY(10px);
+  height: 45px; // 高さ設定
+  width: 40%; // 幅設定
+  line-height: center; /* テキストを垂直方向に中央揃えに設定 */
+  font-size: 20px; /* 文字の大きさを調整 */
+}
+
+.line-signup-button:hover {
+  background-color: #009e00; /* ホバー時の背景色を少し暗く設定 */
+  color: #f5f5f5; /* ホバー時のテキスト色を薄めの白に設定 */
+}
+
+// ユーザー登録ページの背景画像設定
+.signup-page-background {
+  transform: translateX(-30px) translateY(-10px);
+  color: #fff; // テキストの色を白に設定
+  position: relative;
+  background: url('fitness_club10.jpg') no-repeat center center; // 画像を中央に配置
+  background-size: cover; // 画像をコンテナにフィットさせる
+  text-align: center; // テキストを中央に配置
+  height: 900px; // 高さ設定
+  width: 105.3%; // 幅100%設定
+}
+
+.user-registration-container {
+  margin-top: -40px;
+}
+
+/* フォームを右側に配置 */
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.form-control {
+  width: 100%;
+}
+
+.form-custom-width {
+  width: 70%; /* 既に設定されている幅 */
+  margin: 0 auto;
+}
+
+.form-background {
+  transform: translateX(1px) translateY(50px);
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  max-width: 500px;
+  margin-left: 53%; /* 右のマージンを大きくして左に寄せる */
+  height: 540px; // 高さ設定
+  transform: translateY(190px);
+}
+
+.form-content-padding {
+  padding-top: 50px; /* 上に余白を追加 */
+}
+
+.highlight-text {
+  position: relative; /* または absolute、要素の配置に応じて */
+  top: -50px; /* 上に移動 */
+  background-color: black;
+  color: white;
+  font-weight: bold; /* 文字を太字に */
+  font-size: 30px; /* 文字の大きさを調整 */
+  border: 1px solid #BCC6CC; /* 縁をつける */
+  padding: 5px 10px; /* 周りに余白を追加 */
+  border-radius: 5px; /* 角を丸くする */
+  text-shadow: 1px 1px #808080; /* 文字に影をつけて光沢感を増す */
+  width: 350px; /* 横幅を200ピクセルに設定 */
+  transform: translateX(45px) translateY(7px);
+  line-height: 60px; /* テキストを垂直方向に中央揃えに設定 */
+}
+
+/* ラベルを左揃えにする */
+.label-signup {
+  text-align: left; /* テキストを左に揃える */
+  display: block; /* ラベルをブロック要素として表示 */
+  margin-bottom: 5px; /* ラベルと入力フィールドの間に余白を設ける */
+}
+
+.user-edit-background {
+  color: #fff; // テキストの色を白に設定
+  position: relative;
+  background: url('fitness_club23.jpg') no-repeat center center; // 画像を中央に配置
+  background-size: cover; // 画像をコンテナにフィットさせる
+  text-align: center; // テキストを中央に配置
+  height: 880px; // 高さ設定
+  width: 105.3%; // 幅設定
+  transform: translateX(-29.5px) translateY(-30px);
+  border-radius: 0px; /* 角の丸みを設定 */
+}
+
+.user-edit-container {
+  background-color: black;
+  transform: translateX(90px) translateY(200px);
+  height: 500px; // 高さ設定
+  width: 500px; /* 横幅を200ピクセルに設定 */
+  border-radius: 7px;
+  border: 5px solid white; /* 縁をつける */
+}
+
+.user-label-container {
+  color: white;
+  width: 800px; /* 横幅を200ピクセルに設定 */
+  transform: translateX(-153px) translateY(70px);
+}
+
+.user-info-title {
+  width: 400px; /* 横幅を200ピクセルに設定 */
+  background-color: black;
+  transform: translateX(80px) translateY(20px);
+  color: white;
+  border: 1px solid #BCC6CC; /* 縁をつける */
+}
+
+.weather-condition {
+  transform: translateX(8px) translateY(0px);
+  margin: 0 10px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.weather-temperature {
+  transform: translateX(5px) translateY(0px);
+  margin-left: 10px;
+  font-size: 1.2rem;
+  color: #007bff;
+}
+
+.weather-icon {
+  transform: translateX(30px) translateY(0px);
+  width: 50px; /* 例: アイコンのサイズを50pxに設定 */
+  margin-right: 10px; /* 例: アイコンと隣接する要素との間に10pxのマージンを設定 */
+  /* その他必要なスタイリング */
+}
+
+.weather-label {
+  transform: translateX(-10px) translateY(5px);
+  margin-right: -50px;
+  font-size: 21px;
+  height: 36px; // 高さ設定
+}
+
+.weather-info-container {
+  transform: translateX(-360px) translateY(-240px);
+  background-color: rgba(255, 165, 0, 0.5); /* オレンジ色に透明度50%を設定 */
+  border: 2px solid #FFA500; /* オレンジ色のボーダー */
+  border-radius: 10px; /* 角の丸み */
+  padding: 10px 25px; /* 内側の余白 */
+  display: flex; /* 横一列に配置 */
+  align-items: center; /* 中央揃え */
+  justify-content: space-around; /* 要素間の均等な間隔 */
+  margin: 0px 0; /* 上下の外側の余白 */
+  height: 36px;
+  width: 43%;
+}

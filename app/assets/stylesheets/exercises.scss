@@ -1,25 +1,28 @@
 .part-title {
-  background-color: #f8f9fa; /* 背景色 */
+  background: url('fitness_club8.jpg');
   padding: 10px 15px;        /* パディング */
   margin: 10px 0;            /* 上下マージン */
-  border-radius: 0px;        /* 角の丸み */
+  border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影を追加 */
   cursor: pointer;           /* カーソルをポインターに変更 */
   border: 1px solid #ddd;    /* 境界線 */
   text-align: left;
   margin-bottom: 5px;
-  color: #333;
+  color: white;
   font-size: 25px;
-  font-weight: 600; // より太めのフォントに設定
+  font-weight: 600;          /* より太めのフォントに設定 */
+  width: 30%;               /* 横幅を100%に設定 */
+  position: relative; /* 疑似要素の基準点を設定 */
 }
 
 .part-title:hover {
-  color: #0056b3;    /* テキストの色を変更 */
+  color: #808080; /* ホバー状態での文字色を濃いグレーに設定 */
   text-decoration: underline; /* 下線を引く */
   cursor: pointer;   /* カーソルをポインター形状に変更 */
 }
 
 .styled-table {
+  background: #555555; /* より暗いグレー */
   width: 100%;
   border-collapse: collapse;
   margin: 10px 0px 40px; // 上下左右のマージンを設定
@@ -27,10 +30,9 @@
   font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  border-radius: 0px; // 全角を丸くする
 
   thead tr {
-    background-color: #000080; // 紫色に変更
+    background: url('fitness_club7.jpg');
     color: #ffffff;
     text-align: left;
   }
@@ -78,10 +80,6 @@
 
   tbody tr {
     border-bottom: 1px solid #dddddd;
-    
-    &:nth-of-type(even) {
-      background-color: #f3f3f3;
-    }
     
     &:last-of-type {
       border-bottom: 2px solid #009879;
@@ -143,40 +141,77 @@
   }
 }
 
-.form-container {
-  background-color: #f8f9fa; // 背景色
-  padding: 20px;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
+.background-newimage-container {
+  transform: translateX(-30px) translateY(-60px);
+  color: #fff; // テキストの色を白に設定
+  position: relative;
+  background: url('fitness_club14.jpg') no-repeat center center; // 画像を中央に配置
+  background-size: cover; // 画像をコンテナにフィットさせる
+  text-align: center; // テキストを中央に配置
+  height: 930px; // 高さ設定
+  width: 105.3%; // 幅設定
+  border: 5px solid black; /* 縁をつける */
 }
 
-.form-title {
-  font-size: 30px;
-  color: #4a4a4a;
-  text-align: center;
+.new-form-container {
+  background: url('fitness_club13.jpg') no-repeat center center;
+  transform: translateX(-250px) translateY(220px);
+  padding: 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  margin: 60px auto 0; // 上に60pxの隙間を設ける
+  color: #FFFFFF; // 字体を白に変える
+  border: 3px solid silver; /* 縁をつける */
+  height: 330px; // 高さ設定
+  width: 105%; // 幅設定
+}
+
+.new-form-title {
+  display: flex; // Flexboxを有効にする
+  align-items: center; // 垂直方向の中央揃え
+  justify-content: center; // 水平方向の中央揃え
+  transform: translateX(90px) translateY(-30px);
+  font-size: 20px;
+  border-radius: 10px;
+  color: white;
+  background-color: black;
   margin-bottom: 30px;
   text-shadow: none; // シャドウを削除
   font-family: 'Arial', sans-serif;
   font-weight: bold;
+  height: 50px; // 高さ設定
+  width: 60%; // 幅設定
+  border: 1px solid white; /* 縁をつける */
 }
 
-.form-group {
+.new-form-group {
+  color: white;
   margin-bottom: 15px;
+  text-align: left; /* テキストを左揃えにする */
+  transform: translateX(20px) translateY(-30px);
 }
 
-.form-label {
+.new-form-label {
   display: block;
   margin-bottom: 5px;
   font-size: 18px; 
+  background-color: black;
+  width: 13%; // 幅設定
+  border-radius: 5px;
+  display: flex; // Flexboxを有効にする
+  align-items: center; // 垂直方向の中央揃え
+  justify-content: center; // 水平方向の中央揃え
+  border: 1px solid silver; /* 縁をつける */
 }
 
-.form-control {
+.new-form-control {
+  color: black;
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 90%; // 幅設定
 }
 
 .btn-primary {
@@ -370,20 +405,17 @@
 }
 
 .date-display {
-  border: 2px solid #000000; /* 黒の枠線 */
-  padding: 10px;
-  margin-bottom: 20px;
-  background-color: #b2fab4; /* 明るい緑色の背景 */
-  border-radius: 10px; /* 角を丸くする */
-  width: 30%; /* 横幅の設定 */
-  height: 80px; /* 縦幅を設定 */
-  margin: 0 auto; /* 中央揃え */
+  border: 5px solid #000000; /* 枠の色を黒に変更 */
+  padding: 10px; /* 内側の余白 */
+  margin-bottom: 20px; /* 下の余白 */
+  background: url('fitness_club1.jpg');
+  width: 99.9%; // 幅設定
 }
 
 .date-title {
   font-size: 30px; /* 文字サイズを大きくする */
   font-weight: bold; /* 文字を太くする */
-  color: #333333; /* 濃いグレーの文字色 */
+  color: #ffffff; /* 文字色を白に変更 */
 }
 
 // 一般的な一覧表（general-table）のスタイル
@@ -403,7 +435,6 @@
 .date-specific-table {
   .exercise-name-column {
     width: 40%; // 種目列の幅を60%に設定
-    // 他の必要なスタイル
   }
 
   .set-column, .weight-column, .reps-column, .one-rm-column {
@@ -415,4 +446,36 @@
     width: 20%; // 操作列の幅を20%に設定
     // 他の必要なスタイル
   }
+}
+
+.white-link {
+    font-size: 15px;
+    color: white; /* リンクの色を白に設定 */
+    &:hover {
+        color: #CCCCCC; /* ホバー時の色を薄いグレーに設定（任意） */
+    }
+}
+
+.exercise-name-column a:hover {
+  color: #ccc !important; /* ホバー時のテキスト色を明るいグレーに設定 */
+}
+
+
+.exercise-dropdown {
+  transform: translateX(20px)
+}
+
+.chart-navigation {
+  transform: translateX(20px)
+}
+
+.exercise-index-background {
+  background-color: white;
+  color: #fff; // テキストの色を白に設定
+  position: relative;
+  background-size: cover; // 画像をコンテナにフィットさせる
+  text-align: center; // テキストを中央に配置
+  height: 880px; // 高さ設定
+  width: 105.3%; // 幅設定
+  transform: translateX(-29.5px) translateY(-10px);
 }

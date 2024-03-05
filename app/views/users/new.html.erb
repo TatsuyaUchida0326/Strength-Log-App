@@ -1,10 +1,18 @@
 <% provide(:title, 'Sign up') %>
 <% provide(:class_text, 'signup') %>
 <% provide(:button_text, '新規作成') %>
-<h1>ユーザー登録</h1>
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= render 'form' %>
+<div class="signup-page-background">
+  <div class="form-background">
+    <!-- 内側のコンテンツを包む新しいdivを追加 -->
+    <div class="form-content-padding">
+      <div class="text-right-align">
+        <h1 class="highlight-text">ユーザー登録</h1>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 form-custom-width">
+            <%= render 'form' %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

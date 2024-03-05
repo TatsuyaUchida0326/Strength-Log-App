@@ -1,12 +1,13 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "💪Strength App", root_path, id: "logo" %>
+    <%= link_to "Strength App ≫", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
           <li><%= link_to current_user do %><i class="fas fa-home"></i><% end %></li>
-          <li><%= link_to "ＴＲ追加", new_exercise_path %></li>
-          <li><%= link_to "ＴＲ一覧", exercises_path %></li>
+          <li><%= link_to "新規追加", new_exercise_path %></li>
+          <li><%= link_to "一覧表", exercises_path %></li>
+          <li><%= link_to "1RM分析", strength_log_exercises_path %></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-turbo="false">
               メニュー <b class="caret"></b>
@@ -20,7 +21,7 @@
             </ul>
           </li>
         <% else %>
-          <li><%= link_to "ログイン", login_path %></li>
+          <li><%= link_to "ログイン", login_path, class: "login-link" %></li>
         <% end %>
       </ul>
     </nav>

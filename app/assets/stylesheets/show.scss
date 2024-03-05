@@ -1,3 +1,10 @@
+.background-calendar {
+  background: black;
+  height: 870px; // 高さ設定
+  width: 105.3%; // 幅設定
+  transform: translateX(-29px) translateY(-10px);
+}
+
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr); // 7列のグリッド
@@ -5,8 +12,8 @@
   background: #e74c3c;
   padding: 20px;
   border-radius: 10px;
-  max-width: 1000px;
-  height: 500px;
+  max-width: 1140px;
+  height: 750px;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -27,6 +34,8 @@
 
   // 曜日ヘッダーのスタイル
   .day-header {
+    height: 60px; // 高さ設定
+    font-size: 20px;
     text-align: center;
     color: black; // テキストの色を黒に変更
     background-color: #f0ad4e; // 明るいオレンジ色に変更
@@ -48,6 +57,7 @@
   }
   
   .day {
+    height: 80px; // 高さ設定
     font-size: 20px;
     padding: 20px;
     background: white;
@@ -98,18 +108,19 @@
 }
 
 .calendar-navigation {
+  transform: translateY(19px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px;
-  background-color: #f8f9fa; // 背景色
+  background-color: black;
   border-radius: 8px;
   margin-bottom: 20px;
 }
 
 .nav-arrow {
-  font-size: 22px;
-  color: #007bff; // 矢印の色
+  font-size: 28px;
+  color: white;
   margin: 0 15px;
   text-decoration: none; // アンダーラインを除去
 
@@ -119,9 +130,9 @@
 }
 
 .month-year {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: bold;
-  color: #343a40; // 年月のテキスト色
+  color: white;
 }
 
 .training-dot {
@@ -201,3 +212,65 @@
     filter: grayscale(30%); /* グレースケール効果を適用 */
   }
 }
+
+.exercise-show-background {
+  background: #333;
+  height: 870px; // 高さ設定
+  width: 105.3%; // 幅設定
+  transform: translateX(-29px) translateY(-10px);
+}
+
+
+.exercise-show-title {
+  color: white; 
+  background: black;
+  width: 30%; // 幅設定
+  transform: translateX(50px) translateY(10px);
+  border: 1px solid silver; /* 縁をつける */
+  padding-left: 10px; /* 左側に内側の余白を設定 */
+  padding-top: 10px; /* 上側に内側の余白を設定 */
+  border-radius: 7px; // 角を丸く設定
+  font-size: 16px;
+}
+
+.exercise-show-table {
+  color: white; 
+  background: black;
+  width: 90%; // 幅設定
+  transform: translateX(50px) translateY(20px);
+}
+
+.additional-table {
+  transform: translateX(50px) translateY(20px);
+}
+
+/* additional-class-1に適用するスタイル */
+.additional-class-1 {
+  background-color: #FFA500; /* 背景色をオレンジに設定 */
+  color: #333; /* 文字色を暗いグレーに設定 */
+  height: 80px; // 高さ設定
+  width: 10px; /* 幅を120ピクセルに設定 */
+  border-radius: 7px; // 角を丸く設定
+}
+
+.additional-class-1:hover {
+  background-color: #FF8C00; /* ホバー時の背景色を濃いオレンジに設定 */
+  color: #fff; /* ホバー時の文字色を白に設定 */
+}
+
+/* additional-class-2に適用するスタイル */
+.additional-class-2 {
+  background-color: #50C878; /* 背景色をエメラルドグリーンに設定 */
+  width: 100px; /* 幅を100ピクセルに設定 */
+  color: #333; /* 文字色を暗いグレーに設定 */
+  height: 37.5px; // 高さ設定
+  width: 100px; /* 幅を120ピクセルに設定 */
+  transform: translateY(-1px);
+  border-radius: 7px; // 角を丸く設定
+}
+
+.additional-class-2:hover {
+  background-color: #43A047; /* ホバー時の背景色を濃いエメラルドグリーンに設定 */
+  color: #fff; /* ホバー時の文字色を白に設定 */
+}
+

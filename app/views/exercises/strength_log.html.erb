@@ -1,0 +1,25 @@
+<div id="strength-log-background">
+  <h1 class="one-rm-title">１ＲＭ分析グラフ</h1>
+  
+  <select id="exerciseDropdown" class="exercise-dropdown">
+    <% @unique_exercise_names.each do |exercise_name| %>
+      <option value="<%= exercise_name %>"><%= exercise_name %></option>
+    <% end %>
+  </select>
+  
+  <!-- データ埋め込み用の要素 -->
+  <div id="one-rm-data" data-one-rm-data="<%= @one_rm_data.to_json %>"></div>
+  
+  <!-- 週を切り替えるボタン -->
+  <div class="chart-navigation">
+    <button id="prevWeek">◀次</button>
+    <button id="nextWeek">前▶</button>
+  </div>
+  
+  <!-- グラフを表示するための canvas 要素 -->
+  <canvas id="myChart" width="400" height="200"></canvas>
+  
+  <!-- Chart.js のスクリプトを読み込み -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</div>
+

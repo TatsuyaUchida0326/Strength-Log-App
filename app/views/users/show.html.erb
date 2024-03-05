@@ -1,26 +1,27 @@
 <% provide(:title, @user.name) %>
-
-<div class="calendar-navigation">
-  <%= link_to '◀', user_path(@user, month: @date.prev_month), class: 'nav-arrow' %>
-  <span class="month-year"><%= @date.strftime("%Y年 %m月") %></span>
-  <%= link_to '▶', user_path(@user, month: @date.next_month), class: 'nav-arrow' %>
-</div>
-
-<div class="calendar">
-  <!-- 曜日のヘッダー -->
-  <% %w[日 月 火 水 木 金 土].each do |day| %>
-    <div class="day-header"><%= day %></div>
-  <% end %>
-
-  <!-- 月の日付 -->
-  <% (@start_date..@end_date).each do |date| %>
-    <%= link_to exercises_path(date: date), class: 'calendar-date-link' do %>
-      <div class="<%= 'day' %> <%= 'today' if date == Date.today %> <%= 'not-current-month' unless date.month == @date.month %> <%= 'training-day' if @training_days[date] && @training_days[date] > 0 %>">
-        <%= date.day %>
-        <% if @training_days[date] && @training_days[date] > 0 %>
-          <span class="training-dot">●</span>
-        <% end %>
-      </div>
+<div class="background-calendar">
+  <div class="calendar-navigation">
+    <%= link_to '◀', user_path(@user, month: @date.prev_month), class: 'nav-arrow' %>
+    <span class="month-year"><%= @date.strftime("%Y年 %m月") %></span>
+    <%= link_to '▶', user_path(@user, month: @date.next_month), class: 'nav-arrow' %>
+  </div>
+  
+  <div class="calendar">
+    <!-- 曜日のヘッダー -->
+    <% %w[日 月 火 水 木 金 土].each do |day| %>
+      <div class="day-header"><%= day %></div>
     <% end %>
-  <% end %>
+  
+    <!-- 月の日付 -->
+    <% (@start_date..@end_date).each do |date| %>
+      <%= link_to exercises_path(date: date), class: 'calendar-date-link' do %>
+        <div class="<%= 'day' %> <%= 'today' if date == Date.today %> <%= 'not-current-month' unless date.month == @date.month %> <%= 'training-day' if @training_days[date] && @training_days[date] > 0 %>">
+          <%= date.day %>
+          <% if @training_days[date] && @training_days[date] > 0 %>
+            <span class="training-dot">●</span>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>

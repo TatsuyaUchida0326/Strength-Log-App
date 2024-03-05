@@ -5,7 +5,7 @@
       @exercise = Exercise.new
       @exercise.date = params[:date] if params[:date].present?
     end
-
+    
     def add_existing
       original_exercise = Exercise.find_by(id: params[:exercise_id])
 
@@ -38,7 +38,7 @@
     def update
       @exercise = Exercise.find(params[:id])
       # training_records_attributes が存在する場合のみ、この処理を行う
-      if params[:exercise][:training_records_attributes].present?
+      if params[:exercise]&.fetch(:training_records_attributes, nil)&.present?
         existing_record_ids = @exercise.training_records.pluck(:id) # 既存のtraining_recordsのidの配列を取得
         submitted_record_ids = params[:exercise][:training_records_attributes].values.map { |attr| attr[:id].to_i }.compact # パラメータで受け取ったtraining_records_attributesからidを抽出
         # 既存のもので、パラメータに含まれないものは削除する
@@ -63,11 +63,18 @@
 
     def destroy
       @exercise = current_user.exercises.find_by(id: params[:id])
-
+    
       if @exercise
-        date_of_exercise = @exercise.date.strftime("%Y-%m-%d") # トレーニングの日付を取得
-        @exercise.destroy
-        redirect_to exercises_path(date: date_of_exercise), notice: 'エクササイズが削除されました。'
+        # ② 一覧表からの削除の場合、関連する種目全てを削除
+        if params[:delete_all].present?
+          exercises_to_destroy = current_user.exercises.where(exercise: @exercise.exercise)
+          exercises_to_destroy.each(&:destroy)
+          redirect_to exercises_path, notice: '関連する全てのエクササイズが削除されました。'
+        else
+          # ① 特定の日付のトレーニング記録のみを削除
+          @exercise.training_records.destroy_all
+          redirect_to exercises_path(date: @exercise.date.strftime("%Y-%m-%d")), notice: 'トレーニング記録が削除されました。'
+        end
       else
         redirect_to exercises_path, alert: 'エクササイズが見つからないか、削除する権限がありません。'
       end
@@ -87,7 +94,9 @@
     end
 
     def strength_log
-      @exercises = Exercise.order(:part)
+      @hide_header = true
+      @one_rm_data = Exercise.one_rm_data(current_user)
+      @unique_exercise_names = current_user.exercises.pluck(:exercise).uniq
     end
 
     def edit

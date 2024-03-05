@@ -1,0 +1,84 @@
+.login-page-background {
+  transform: translateX(-30px) translateY(-30px);
+  color: #fff; // テキストの色を白に設定
+  position: relative;
+  background: url('fitness_club15.jpg') no-repeat center center; // 画像を中央に配置
+  background-size: cover; // 画像をコンテナにフィットさせる
+  text-align: center; // テキストを中央に配置
+  height: 900px; // 高さ設定
+  width: 105.3%; // 幅100%設定
+}
+
+.login-frame-container {
+  transform: translateX(380px) translateY(220px);
+  color: #fff; // テキストの色を白に設定
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.6); // 背景色を半透明の黒に設定
+  background-size: cover; // 画像をコンテナにフィットさせる
+  text-align: center; // テキストを中央に配置
+  height: 490px; // 高さ設定
+  width: 40%; // 幅100%設定
+  border-radius: 600px; /* 角を丸くする */
+}
+
+.login-label-frame {
+  transform: translateX(10px) translateY(50px);
+  font-size: 20px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 30px;
+  text-shadow: none; // シャドウを削除
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  height: 300px; // 高さ設定
+  width: 100%; // 幅設定
+}
+
+.login-title {
+  display: flex; // Flexboxを有効にする
+  align-items: center; // 垂直方向の中央揃え
+  justify-content: center; // 水平方向の中央揃え
+  transform: translateX(120px) translateY(60px);
+  font-size: 50px;
+  border-radius: 10px;
+  color: white;
+  background-color: black;
+  margin-bottom: 30px;
+  text-shadow: none; // シャドウを削除
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  height: 50px; // 高さ設定
+  width: 50%; // 幅設定
+}
+
+.label-login {
+  transform: translateX(35px) translateY(1px);
+  text-align: left; /* テキストを左揃えに設定 */
+  display: block; /* ラベルをブロック要素として表示 */
+}
+
+.login-form-control {
+  transform: translateX(35px);
+  width: 80%; // 幅設定
+  text-align: left; /* テキストを左揃えに設定 */
+  display: block; /* ラベルをブロック要素として表示 */
+}
+
+/* チェックボックスとラベルを左揃えにするスタイル */
+.checkbox-container {
+  transform: translateX(-85px) translateY(-10px);
+}
+
+.btn-login {
+  color: white;
+  background-color: blue;
+  transform: translateX(35px) translateY(-10px);
+  height: 40px; // 高さ設定
+  width: 80%; // 幅設定
+  text-align: center; /* テキストを左揃えに設定 */
+  display: block; /* ラベルをブロック要素として表示 */
+}
+
+.register-prompt {
+  transform: translateX(-15px) translateY(-10px);
+}

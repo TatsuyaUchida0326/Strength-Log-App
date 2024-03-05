@@ -1,17 +1,19 @@
 <%= form_with(model: @user, local: true, data: { turbo: false }) do |f| %>
-  <%= render 'shared/error_messages', object: @user %>
+  <div class="user-registration-container"> <!-- コンテナで囲む -->
+    <%= render 'shared/error_messages', object: @user %>
 
-  <%= f.label :name, class: "label-#{yield(:class_text)}" %>
-  <%= f.text_field :name, class: "form-control" %>
+    <%= f.label :name, class: "label-signup" %>
+    <%= f.text_field :name, class: "form-control" %>
 
-  <%= f.label :email, class: "label-#{yield(:class_text)}" %>
-  <%= f.email_field :email, class: "form-control" %>
+    <%= f.label :email, class: "label-signup" %>
+    <%= f.email_field :email, class: "form-control" %>
 
-  <%= f.label :password, class: "label-#{yield(:class_text)}" %>
-  <%= f.password_field :password, class: "form-control" %>
+    <%= f.label :password, class: "label-signup" %>
+    <%= f.password_field :password, class: "form-control" %>
 
-  <%= f.label :password_confirmation, class: "label-#{yield(:class_text)}" %>
-  <%= f.password_field :password_confirmation, class: "form-control" %>
+    <%= f.label :password_confirmation, class: "label-signup" %>
+    <%= f.password_field :password_confirmation, class: "form-control" %>
 
-  <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
+    <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
+  </div> <!-- コンテナの終了 -->
 <% end %>

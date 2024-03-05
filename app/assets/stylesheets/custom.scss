@@ -1,6 +1,13 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.navbar-fixed-top {
+  background: url('fitness_club6.jpg');
+  max-width: 1200px; /* 最大幅を1200pxに設定 */
+  margin: 0 auto; /* 左右のマージンを自動で調整して中央揃え */
+  height: 30px;
+}
+
 /* universal */
 
 body {
@@ -54,7 +61,7 @@ p {
 
 #logo {
   float: left;
-  margin-right: 10px;
+  margin-left: 209px;
   font-size: 1.7em;
   color: #fff;
   text-transform: uppercase;
@@ -63,9 +70,17 @@ p {
   font-weight: bold;
 }
 
-#logo:hover {
-  color: #fff;
-  text-decoration: none;
+.login-link {
+  color: #fff; /* 文字色を白に設定 */
+  font-size: 18px; /* フォントサイズを調整 */
+  /* ホバー時のスタイル */
+  transition: color 0.3s ease; /* 色の変化にアニメーションを適用 */
+  margin-right: 130px;
+  font-weight: bold;
+}
+
+.login-link:hover {
+  color: #808080; /* ホバー時に濃いグレー色に変更 */
 }
 
 /* debug */
@@ -82,8 +97,6 @@ p {
   font-size: 0.85em; // フォントサイズを調整
   white-space: pre-wrap; // 折り返しを許可して、長いテキストがある場合に複数行にわたって表示
   word-wrap: break-word; // 長い単語がある場合に折り返しを許可
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -104,6 +117,28 @@ p {
   }
 }
 
+.app-title {
+  position: relative;
+  top: 180px; /* 例: タイトルを上から20px下げる */
+}
+
+.app-description {
+  position: relative;
+  top: 180px; /* 例: 説明文を上から30px下げる */
+}
+
+.jumbotron-container {
+  position: relative;  top: 10px; right: 30px; 
+  padding-top: 50px; /* 上部にパディングを追加して内容を下げる */
+  padding-bottom: 50px; /* 下部にパディングを追加して内容の高さを調整 */
+}
+
+.jumbotron-container h1,
+.jumbotron-container p,
+.jumbotron-container .btn {
+  margin-top: 20px; /* 各要素の上マージンを調整して間隔を広げる */
+}
+
 .jumbotron {
     padding-top: 10rem;
     padding-bottom: 10rem;
@@ -117,14 +152,14 @@ p {
 
 .center.jumbotron {
   color: #fff; // テキストの色を白に設定
-
-  h1, p {
-    color: #fff; // タイトルと段落のテキストも白に設定
-  }
   position: relative;
-  background: url('fitness_club.jpg') no-repeat center center; // 画像を中央に配置
+  background: url('fitness_club5.jpg') no-repeat center center; // 画像を中央に配置
   background-size: cover; // 画像をコンテナにフィットさせる
   text-align: center; // テキストを中央に配置
+  height: 880px; // 高さ設定
+  width: 105.3%; // 幅設定
+  transform: translateX(0px) translateY(-20px);
+  border-radius: 0px; /* 角の丸みを設定 */
 }
 
 // 画像がレスポンシブであることを保証
@@ -194,4 +229,5 @@ p {
     }
   }
 }
+
 

@@ -1,44 +1,51 @@
-<%= form_with(model: @exercise, local: true) do |form| %>
-  <p>部位: <%= @exercise.part %></p>
-  <p>種目名: <%= @exercise.exercise %></p>
-
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>セット</th>
-        <th>重量(kg)</th>
-        <th>回数</th>
-        <th>1RM(kg)</th>
-        <th>備考</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody id="training-records">
-      <% @exercise.training_records.each_with_index do |record, index| %>
-        <tr>
-          <td><%= index + 1 %></td>
-          <td>
-            <%= form.number_field :weight, value: record.weight, name: "exercise[training_records_attributes][#{index}][weight]", class: 'form-control weight-input' %>
-          </td>
-          <td>
-            <%= form.number_field :reps, value: record.reps, name: "exercise[training_records_attributes][#{index}][reps]", class: 'form-control reps-input' %>
-          </td>
-          <td>
-            <%= form.number_field :one_rm, value: record.one_rm, name: "exercise[training_records_attributes][#{index}][one_rm]", class: 'form-control one-rm-input', readonly: true %>
-          </td>
-          <td>
-            <%= form.text_field :comment, value: record.comment, name: "exercise[training_records_attributes][#{index}][comment]", class: 'form-control' %>
-          </td>
-          <td>
-            <%= form.hidden_field "training_records_attributes][#{index}][_destroy", id: "exercise_training_records_attributes_#{index}__destroy", value: "0", class: "destroy-flag" %>
-            <%= link_to '#', class: 'btn btn-danger remove-record', data: { action: "click->exercise#markForDeletion", target: "exercise.trainingRecord", index: index } do %>
-              <i class="fas fa-trash"></i>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <a href="#" id="add-record" class="btn btn-primary">セットを追加</a>
-  <%= form.submit "保存", class: "btn btn-success" %>
-<% end %>
+<div class="exercise-show-background">
+  <%= form_with(model: @exercise, local: true) do |form| %>
+  <div class="exercise-show-title">
+    <p class="exercise-show-part">部位: <%= @exercise.part %></p>
+    <p class="exercise-show-name">種目名: <%= @exercise.exercise %></p>
+  </div>
+    <div class="exercise-show-table">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>セット</th>
+            <th>重量(kg)</th>
+            <th>回数</th>
+            <th>1RM(kg)</th>
+            <th>備考</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="training-records">
+          <% @exercise.training_records.each_with_index do |record, index| %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td>
+                <%= form.number_field :weight, value: record.weight, name: "exercise[training_records_attributes][#{index}][weight]", class: 'form-control weight-input' %>
+              </td>
+              <td>
+                <%= form.number_field :reps, value: record.reps, name: "exercise[training_records_attributes][#{index}][reps]", class: 'form-control reps-input' %>
+              </td>
+              <td>
+                <%= form.number_field :one_rm, value: record.one_rm, name: "exercise[training_records_attributes][#{index}][one_rm]", class: 'form-control one-rm-input', readonly: true %>
+              </td>
+              <td>
+                <%= form.text_field :comment, value: record.comment, name: "exercise[training_records_attributes][#{index}][comment]", class: 'form-control' %>
+              </td>
+              <td>
+                <%= form.hidden_field "training_records_attributes][#{index}][_destroy", id: "exercise_training_records_attributes_#{index}__destroy", value: "0", class: "destroy-flag" %>
+                <%= link_to '#', class: 'btn btn-danger remove-record', data: { action: "click->exercise#markForDeletion", target: "exercise.trainingRecord", index: index } do %>
+                  <i class="fas fa-trash"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="additional-table">
+      <a href="#" id="add-record" class="additional-class-1">セットを追加</a>
+      <%= form.submit "保存", class: "additional-class-2" %>
+    </div>
+  <% end %>
+</div>
