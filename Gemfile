@@ -15,18 +15,18 @@ gem "jbuilder"
 gem "bootsnap", require: false
 gem 'dotenv-rails', groups: [:development, :test]
 
-group :development do
+group :development, :test do
   gem "sqlite3"
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
+end
+
+group :development do
+  gem "web-console"
 end
 
 group :production do
   gem 'pg', '0.20.0'
   gem 'rails_12factor'
-end
-
-group :development do
-  gem "web-console"
 end
 
 group :test do
