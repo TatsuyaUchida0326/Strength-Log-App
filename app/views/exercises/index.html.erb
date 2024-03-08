@@ -77,7 +77,7 @@
                   <td class="exercise-actions-column">
                     <%= link_to '追加', '#', class: 'btn btn-add', onclick: "openAddModal(#{exercise.id})", data: { toggle: 'modal' } %>
                     <%= link_to '編集', "#", class: 'btn btn-edit', data: { toggle: 'modal' }, onclick: "openModal('#modal-#{exercise.id}')" %>
-                    <%= link_to '一括削除', exercise_path(exercise, delete_all: true), data: { turbo_method: :delete, confirm: 'この種目に関連する全ての記録を削除しますか？' }, class: 'btn btn-danger' %>
+                    <%= link_to '一括削除', exercise_path(exercise, delete_all: true), data: { turbo_method: :delete, confirm: 'この種目に関連する全ての記録を削除しますか？' }, class: 'btn btn-danger' %> 
                   </td>
                 </tr>
               <% end %>
@@ -90,3 +90,5 @@
 </div>
 <%= render 'edit_modal' %>
 <%= render 'add_modal' %>
+
+

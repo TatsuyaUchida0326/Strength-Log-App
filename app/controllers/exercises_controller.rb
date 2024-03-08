@@ -61,25 +61,24 @@
       end
     end
 
-    def destroy
+    def destroy 
       @exercise = current_user.exercises.find_by(id: params[:id])
+      if @exercise 
+        # ② 一覧表からの削除の場合、関連する種目全てを削除 
+        if params[:delete_all].present? 
+          exercises_to_destroy = current_user.exercises.where(exercise: @exercise.exercise) 
+          exercises_to_destroy.each(&:destroy) 
+          redirect_to exercises_path, notice: '関連する全てのエクササイズが削除されました。' 
+        else 
+          # ① 特定の日付のトレーニング記録のみを削除 
+          @exercise.training_records.destroy_all 
+          redirect_to exercises_path(date: @exercise.date.strftime("%Y-%m-%d")), notice: 'トレーニング記録が削除されました。' 
+        end 
+      else 
+        redirect_to exercises_path, alert: 'エクササイズが見つからないか、削除する権限がありません。' 
+      end 
+    end 
     
-      if @exercise
-        # ② 一覧表からの削除の場合、関連する種目全てを削除
-        if params[:delete_all].present?
-          exercises_to_destroy = current_user.exercises.where(exercise: @exercise.exercise)
-          exercises_to_destroy.each(&:destroy)
-          redirect_to exercises_path, notice: '関連する全てのエクササイズが削除されました。'
-        else
-          # ① 特定の日付のトレーニング記録のみを削除
-          @exercise.training_records.destroy_all
-          redirect_to exercises_path(date: @exercise.date.strftime("%Y-%m-%d")), notice: 'トレーニング記録が削除されました。'
-        end
-      else
-        redirect_to exercises_path, alert: 'エクササイズが見つからないか、削除する権限がありません。'
-      end
-    end
-
     def index
       if params[:date]
         @selected_date = params[:date].to_date

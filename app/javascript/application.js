@@ -95,12 +95,6 @@ document.addEventListener('click', () => {
   });
 });
 
-window.addEventListener('load', function() {
-  var debugHeight = document.querySelector('.debug_dump').offsetHeight;
-  var content = document.querySelector('.content'); // コンテンツ部分のクラスまたはIDを指定
-  content.style.marginBottom = debugHeight + 'px';
-});
-
 document.addEventListener('turbo:load', () => {
   
   $('[data-toggle="dropdown"]').dropdown();
