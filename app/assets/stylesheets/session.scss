@@ -22,32 +22,11 @@
 
 .signup-button {
   position: relative;
-  transform: translateX(88px) translateY(140px);
+  transform: translateX(88px) translateY(75px);
   height: 45px; // 高さ設定
   width: 20%; // 
   line-height: center;
   font-size: 20px;
-}
-
-.line-login {
-  transform: translateX(90px) translateY(108px);
-  width: 50%; // 幅設定
-}
-
-.line-signup-button {
-  background-color: #00C300; /* LINEの緑色 */
-  color: #fff; // テキストの色を白に設定
-  position: relative;
-  transform: translateX(180px) translateY(10px);
-  height: 45px; // 高さ設定
-  width: 40%; // 幅設定
-  line-height: center; /* テキストを垂直方向に中央揃えに設定 */
-  font-size: 20px; /* 文字の大きさを調整 */
-}
-
-.line-signup-button:hover {
-  background-color: #009e00; /* ホバー時の背景色を少し暗く設定 */
-  color: #f5f5f5; /* ホバー時のテキスト色を薄めの白に設定 */
 }
 
 // ユーザー登録ページの背景画像設定
@@ -154,37 +133,37 @@
 }
 
 .weather-condition {
-  transform: translateX(8px) translateY(0px);
+  transform: translateX(17px) translateY(0px);
   margin: 0 10px;
   font-size: 1.2rem;
   color: #666;
 }
 
 .weather-temperature {
-  transform: translateX(5px) translateY(0px);
+  transform: translateX(16px) translateY(0px);
   margin-left: 10px;
   font-size: 1.2rem;
   color: #007bff;
 }
 
 .weather-icon {
-  transform: translateX(30px) translateY(0px);
+  transform: translateX(25px) translateY(0px);
   width: 50px; /* 例: アイコンのサイズを50pxに設定 */
   margin-right: 10px; /* 例: アイコンと隣接する要素との間に10pxのマージンを設定 */
   /* その他必要なスタイリング */
 }
 
 .weather-label {
-  transform: translateX(-10px) translateY(5px);
+  transform: translateX(-17px) translateY(5px);
   margin-right: -50px;
   font-size: 21px;
   height: 36px; // 高さ設定
 }
 
 .weather-info-container {
-  transform: translateX(-360px) translateY(-240px);
-  background-color: rgba(255, 165, 0, 0.5); /* オレンジ色に透明度50%を設定 */
-  border: 2px solid #FFA500; /* オレンジ色のボーダー */
+  transform: translateX(-283px) translateY(-297px);
+  background-color: #003366;
+  border: 1px solid #FFA500; /* オレンジ色のボーダー */
   border-radius: 10px; /* 角の丸み */
   padding: 10px 25px; /* 内側の余白 */
   display: flex; /* 横一列に配置 */
@@ -192,5 +171,26 @@
   justify-content: space-around; /* 要素間の均等な間隔 */
   margin: 0px 0; /* 上下の外側の余白 */
   height: 36px;
-  width: 43%;
+  width: 55%;
+}
+
+.city-selection-label {
+  font-size: 16px;
+  transform: translateX(-545px) translateY(-243px);
+}
+
+.city-selection-dropdown {
+  font-size: 16px;
+  transform: translateX(-40px) translateY(-250px);
+  width: 12%;
+}
+
+.city-check-button {
+  background-color: #003366;
+  border: 1px solid white;
+  font-size: 16px;
+  transform: translateX(-365px) translateY(-303px);
+  height: 33px;
+  width: 14%;
+  line-height: 1px; /* テキストを垂直方向に中央揃えに設定 */
 }

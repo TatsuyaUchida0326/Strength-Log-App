@@ -3,13 +3,13 @@ class StaticPagesController < ApplicationController
   require 'json'
 
   def top
-    @weather = fetch_weather
+    city = params[:city] || "Otaru" # パラメータから地域を取得、デフォルトは小樽市
+    @weather = fetch_weather(city)
   end
 
   private
 
-  def fetch_weather
-    city = "Otaru" # 都市名を"Otaru"に設定
+  def fetch_weather(city)
     api_key = ENV['OPEN_WEATHER_MAP_API_KEY']
     url = "https://api.openweathermap.org/data/2.5/weather?q=#{city}&appid=#{api_key}&units=metric&lang=ja"
     uri = URI(url)

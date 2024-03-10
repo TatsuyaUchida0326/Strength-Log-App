@@ -2,10 +2,36 @@
 <div class="center jumbotron jumbotron-container">
   <h1 class="app-title">♠Strength Log App♠</h1>
   <p class="app-description">◆トレーニング記録を管理するアプリケーション◆</p>
+
+  <%= form_with(url: root_path, method: :get, local: true, html: { class: "city-selection-form" }) do |form| %>
+    <%= form.label :city, "地域選択:", class: "city-selection-label" %>
+    <%= form.select :city, options_for_select([
+        ["小樽", "Otaru"],
+        ["札幌", "Sapporo"],
+        ["釧路", "Kushiro"],
+        ["青森", "Aomori"],
+        ["盛岡", "Morioka"],
+        ["新潟", "Niigata"],
+        ["仙台", "Sendai"],
+        ["東京", "Tokyo"],
+        ["長野", "Nagano"],
+        ["金沢", "Kanazawa"],
+        ["名古屋", "Nagoya"],
+        ["大阪", "Osaka"],
+        ["岡山", "Okayama"],
+        ["松江", "Matsue"],
+        ["広島", "Hiroshima"],
+        ["福岡", "Fukuoka"],
+        ["鹿児島", "Kagoshima"],
+        ["那覇", "Naha"]
+      ], selected: params[:city]), { include_blank: true }, { class: "city-selection-dropdown form-control" } %>
+    <%= form.submit "天気をチェック", class: "btn btn-info city-check-button" %>
+  <% end %>
+
   <% if @weather && @weather['weather'].present? %>
     <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
       <div class="weather-info-container">
-        <span class="weather-label">本日の天気</span>
+        <span class="weather-label">選択された地域の天気</span>
         <img src="https://openweathermap.org/img/wn/<%= @weather['weather'][0]['icon'] %>.png" alt="Weather icon" class="weather-icon">
         <p class="weather-condition">状況: <%= @weather['weather'][0]['description'] %></p>
         <p class="weather-temperature">温度: <%= @weather['main']['temp'] %>℃</p>
@@ -16,3 +42,4 @@
     <%= link_to "ユーザー登録", signup_path, class: "btn btn-lg btn-primary signup-button" %>
   </div>
 </div>
+
