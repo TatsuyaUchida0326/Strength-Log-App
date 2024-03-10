@@ -82,9 +82,9 @@
     def index
       if params[:date]
         @selected_date = params[:date].to_date
-        @exercises = Exercise.where(date: @selected_date)
+        @exercises = current_user.exercises.where(date: @selected_date)
       else
-        @exercises = Exercise.all
+        @exercises = current_user.exercises
       end
     end
 
@@ -113,10 +113,8 @@
     private
 
     def set_exercise
-      @exercise = Exercise.find_by(id: params[:id])
-      unless @exercise
-        redirect_to exercises_path, alert: "指定されたトレーニングが見つかりません。"
-      end
+      @exercise = current_user.exercises.find_by(id: params[:id])
+      redirect_to(exercises_path, alert: "指定されたトレーニングが見つかりません。") unless @exercise
     end
 
     # Strong Parametersを使用して安全にパラメータを取り扱う
@@ -148,4 +146,5 @@
       exercise
     end
   end
+  
   
