@@ -8,16 +8,24 @@
     
     def add_existing
       original_exercise = Exercise.find_by(id: params[:exercise_id])
-
+    
       # トレーニング種目が見つからない場合の処理
       unless original_exercise
         redirect_to exercises_path, alert: '指定されたトレーニング種目が見つかりません。'
         return
       end
-
+    
+      # 重複チェック
+      duplicate = Exercise.where(user_id: original_exercise.user_id, part: original_exercise.part, exercise: original_exercise.exercise, date: params[:date]).exists?
+    
+      if duplicate
+        redirect_to exercises_path(date: params[:date]), alert: '既に該当のエクササイズは存在します。'
+        return
+      end
+    
       new_exercise = original_exercise.dup
       new_exercise.date = params[:date]
-
+    
       if new_exercise.save
         redirect_to exercises_path(date: new_exercise.date.strftime("%Y-%m-%d")), notice: 'トレーニングが追加されました。'
       else
@@ -27,9 +35,16 @@
 
     def create
       @exercise = current_user.exercises.build(exercise_params)
-      if @exercise.save
+  
+      # 重複チェック
+      duplicate = current_user.exercises.where(part: @exercise.part, exercise: @exercise.exercise).exists?
+  
+      if duplicate
+        flash[:alert] = '既に該当のエクササイズは存在します。'
+        redirect_to exercises_path
+      elsif @exercise.save
         flash[:notice] = 'トレーニングが追加されました。'
-        redirect_to exercises_path # 日付パラメータを指定しない
+        redirect_to exercises_path
       else
         render :new
       end
@@ -48,7 +63,7 @@
       end
     
       if @exercise.update(exercise_params)
-        flash[:success] = '記録が更新されました。'
+        flash[:success] = '内容が更新されました。'
         # 日付に基づいてリダイレクトする場合、@exercise.dateが存在することを確認
         if @exercise.date
           redirect_to exercises_path(date: @exercise.date.strftime("%Y-%m-%d"))
@@ -61,23 +76,29 @@
       end
     end
 
-    def destroy 
+    def destroy
       @exercise = current_user.exercises.find_by(id: params[:id])
-      if @exercise 
-        # ② 一覧表からの削除の場合、関連する種目全てを削除 
-        if params[:delete_all].present? 
-          exercises_to_destroy = current_user.exercises.where(exercise: @exercise.exercise) 
-          exercises_to_destroy.each(&:destroy) 
-          redirect_to exercises_path, notice: '関連する全てのエクササイズが削除されました。' 
-        else 
-          # ① 特定の日付のトレーニング記録のみを削除 
-          @exercise.training_records.destroy_all 
-          redirect_to exercises_path(date: @exercise.date.strftime("%Y-%m-%d")), notice: 'トレーニング記録が削除されました。' 
-        end 
-      else 
-        redirect_to exercises_path, alert: 'エクササイズが見つからないか、削除する権限がありません。' 
-      end 
-    end 
+      if @exercise
+        if params[:delete_all].present?
+          exercises_to_destroy = current_user.exercises.where(exercise: @exercise.exercise)
+          if exercises_to_destroy.any?
+            exercises_to_destroy.each(&:destroy)
+            redirect_to exercises_path(date: @exercise.date.strftime("%Y-%m-%d")), notice: '関連する全てのエクササイズが削除されました。'
+          else
+            redirect_to exercises_path(date: @exercise.date.strftime("%Y-%m-%d")), alert: '記録がありません。'
+          end
+        else
+          if @exercise.training_records.any?
+            @exercise.training_records.destroy_all
+            redirect_to exercises_path(date: @exercise.date.strftime("%Y-%m-%d")), notice: 'トレーニング記録が削除されました。'
+          else
+            redirect_to exercises_path(date: @exercise.date.strftime("%Y-%m-%d")), alert: '記録がありません。'
+          end
+        end
+      else
+        redirect_to exercises_path, alert: 'エクササイズが見つからないか、削除する権限がありません。'
+      end
+    end
     
     def index
       if params[:date]

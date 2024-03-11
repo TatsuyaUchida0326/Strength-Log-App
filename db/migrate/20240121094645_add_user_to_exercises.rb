@@ -3,3 +3,4 @@ class AddUserToExercises < ActiveRecord::Migration[6.0]
     add_reference :exercises, :user, null: true, foreign_key: true
   end
 end
+
