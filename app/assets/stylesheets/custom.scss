@@ -110,6 +110,23 @@ p {
   }
 }
 
+.flash-notice {
+  color: green; // 通常の通知
+}
+
+.flash-alert {
+  color: red; // 警告やエラー
+}
+
+.flash-success {
+  background-color: #28a745; /* Bootstrap 4の成功色 */
+  color: white;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
 .field_with_errors {
   @extend .has-error;
   .form-control {

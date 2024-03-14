@@ -84,7 +84,7 @@
           if exercises_to_destroy.any?
             exercises_to_destroy.each(&:destroy)
             # 特定の日付にリダイレクトせず、一般的なエクササイズの一覧ページにリダイレクト
-            redirect_to exercises_path, notice: '関連する全てのエクササイズが削除されました。'
+            redirect_to exercises_path, alert: '関連する全てのエクササイズが削除されました。'
           else
             redirect_to exercises_path, alert: '記録がありません。'
           end
@@ -92,7 +92,7 @@
           if @exercise.training_records.any?
             @exercise.training_records.destroy_all
             # 特定の日付のトレーニング記録を削除した場合、その日付のページにリダイレクト
-            redirect_to exercises_path(date: @exercise.date&.strftime("%Y-%m-%d")), notice: 'トレーニング記録が削除されました。'
+            redirect_to exercises_path(date: @exercise.date&.strftime("%Y-%m-%d")), alert: 'トレーニング記録が削除されました。'
           else
             redirect_to exercises_path(date: @exercise.date&.strftime("%Y-%m-%d")), alert: '記録がありません。'
           end
