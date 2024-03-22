@@ -75,30 +75,61 @@
         render :edit
       end
     end
-
-    def destroy
+    
+    def show
       @exercise = current_user.exercises.find_by(id: params[:id])
-      if @exercise
-        if params[:delete_all].present?
-          exercises_to_destroy = current_user.exercises.where(exercise: @exercise.exercise)
-          if exercises_to_destroy.any?
-            exercises_to_destroy.each(&:destroy)
-            # 特定の日付にリダイレクトせず、一般的なエクササイズの一覧ページにリダイレクト
-            redirect_to exercises_path, alert: '関連する全てのエクササイズが削除されました。'
-          else
-            redirect_to exercises_path, alert: '記録がありません。'
-          end
-        else
-          if @exercise.training_records.any?
-            @exercise.training_records.destroy_all
-            # 特定の日付のトレーニング記録を削除した場合、その日付のページにリダイレクト
-            redirect_to exercises_path(date: @exercise.date&.strftime("%Y-%m-%d")), alert: 'トレーニング記録が削除されました。'
-          else
-            redirect_to exercises_path(date: @exercise.date&.strftime("%Y-%m-%d")), alert: '記録がありません。'
-          end
-        end
+      if @exercise.nil?
+        redirect_to exercises_path, alert: '指定されたエクササイズが見つかりません。'
+        return
+      end
+    end
+
+    def destroy 
+      @exercise = current_user.exercises.find_by(id: params[:id]) 
+      if @exercise 
+        if params[:delete_all].present? 
+          exercises_to_destroy = current_user.exercises.where(exercise: @exercise.exercise) 
+          if exercises_to_destroy.any? 
+            exercises_to_destroy.each(&:destroy) 
+            # 特定の日付にリダイレクトせず、一般的なエクササイズの一覧ページにリダイレクト 
+            redirect_to exercises_path, alert: '関連する全てのエクササイズが削除されました。' 
+          else 
+            redirect_to exercises_path, alert: '記録がありません。' 
+          end 
+        else 
+          if @exercise.training_records.any? 
+            @exercise.training_records.destroy_all 
+            # 特定の日付のトレーニング記録を削除した場合、その日付のページにリダイレクト 
+            redirect_to exercises_path(date: @exercise.date&.strftime("%Y-%m-%d")), alert: 'トレーニング記録が削除されました。' 
+          else 
+            redirect_to exercises_path(date: @exercise.date&.strftime("%Y-%m-%d")), alert: '記録がありません。' 
+          end 
+        end 
+      else 
+        redirect_to exercises_path, alert: 'エクササイズが見つからないか、削除する権限がありません。' 
+      end 
+    end
+    
+    def bulk_delete_selected
+      part = params[:part]
+      selected_exercise_id = params[:exercise_id]
+    
+      # 選択された種目IDから種目名を取得
+      selected_exercise = current_user.exercises.find_by(id: selected_exercise_id)
+    
+      # エラーハンドリング：選択された種目が存在しない場合
+      unless selected_exercise
+        redirect_to exercises_path, alert: "選択された種目が存在しません。"
+        return
+      end
+    
+      # 同じ部位・種目名の全てのレコードを削除
+      exercises_to_destroy = current_user.exercises.where(part: part, exercise: selected_exercise.exercise)
+    
+      if exercises_to_destroy.destroy_all
+        redirect_to exercises_path, alert: "選択された種目に関連する全ての記録が削除されました。"
       else
-        redirect_to exercises_path, alert: 'エクササイズが見つからないか、削除する権限がありません。'
+        redirect_to exercises_path, alert: "削除処理に失敗しました。"
       end
     end
     
@@ -109,10 +140,12 @@
       else
         @exercises = current_user.exercises
       end
-    end
-
-    def show
-      @exercise = Exercise.find(params[:id])
+    
+      # 部位ごとにユニークな種目リストを生成（SQLite対応）
+      exercises_by_part = @exercises.group_by(&:part)
+      @unique_exercises_by_part = exercises_by_part.transform_values do |exercises|
+        exercises.uniq { |e| e.exercise }
+      end
     end
 
     def strength_log
@@ -136,8 +169,12 @@
     private
 
     def set_exercise
+      return if params[:delete_all].present? # 一括削除の場合はスキップ
+      
       @exercise = current_user.exercises.find_by(id: params[:id])
-      redirect_to(exercises_path, alert: "指定されたトレーニングが見つかりません。") unless @exercise
+      unless @exercise
+        redirect_to exercises_path, alert: "指定されたトレーニングが見つかりません。"
+      end
     end
 
     # Strong Parametersを使用して安全にパラメータを取り扱う
@@ -169,5 +206,6 @@
       exercise
     end
   end
-  
-  
+
+
+

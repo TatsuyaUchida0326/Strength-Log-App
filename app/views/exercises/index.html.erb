@@ -1,94 +1,107 @@
-<div class="exercise-index-background">
-  <% if @selected_date %>
-  <div class="date-display">
-    <h2 class="text-center date-title"><%= @selected_date.strftime("%Y年 %m月 %d日") %></h2>
-  </div>
-  <% end %>
-  
-  <% if @exercises.empty? %>
-    <%= link_to new_exercise_path, class: "message-box-link" do %>
-      <div class="text-center message-box">
-        <p class="no-exercise-message">トレーニング種目を追加してください。</p>
-      </div>
-    <% end %>
-  <% else %>
-    <% @exercises.group_by(&:part).each do |part, exercises| %>
-      <h2 class="part-title" data-toggle="collapse" data-target="#exercises-for-<%= part %>"><%= part %></h2>
-  
-      <div id="exercises-for-<%= part %>" class="collapse">
-        <% if @selected_date.present? %>
-          
-            <table class="styled-table date-specific-table table table-bordered">
-              <thead>
-                <tr>
-                  <th class="exercise-name-column">種目</th>
-                  <th class="set-column">セット</th>
-                  <th class="weight-column">重量(㎏)</th>
-                  <th class="reps-column">回数</th>
-                  <th class="one-rm-column">1RM(㎏)</th>
-                  <th class="exercise-name-column">操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% exercises.uniq { |e| e.exercise }.each do |exercise| %>
-                  <tr>
-                    <td>
-                      <%= link_to exercise.exercise, exercise_path(exercise), class: "white-link" %>
-                    </td>
-                    <td class="set-column">
-                      <% exercise.training_records.each_with_index do |record, index| %>
-                        <%= index + 1 %><br>
-                      <% end %>
-                    </td>
-                    <td class="weight-column">
-                      <% exercise.training_records.each do |record| %>
-                        <%= record.weight %><br>
-                      <% end %>
-                    </td>
-                    <td class="reps-column">
-                      <% exercise.training_records.each do |record| %>
-                        <%= record.reps %><br>
-                      <% end %>
-                    </td>
-                    <td class="one-rm-column">
-                      <% exercise.training_records.each do |record| %>
-                        <%= record.one_rm %><br>
-                      <% end %>
-                    </td>
-                    <td class="exercise-actions-column">
-                      <%= link_to ' 削 除 ', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-        <% else %>
-          <table class="styled-table general-table table table-bordered">
-            <thead>
-              <tr>
-                <th class="exercise-name-column">種目</th>
-                <th class="exercise-name-column">操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% exercises.uniq { |e| e.exercise }.each do |exercise| %>
-                <tr>
-                  <td><%= exercise.exercise %></td>
-                  <td class="exercise-actions-column">
-                    <%= link_to '追加', '#', class: 'btn btn-add', onclick: "openAddModal(#{exercise.id})", data: { toggle: 'modal' } %>
-                    <%= link_to '編集', "#", class: 'btn btn-edit', data: { toggle: 'modal' }, onclick: "openModal('#modal-#{exercise.id}')" %>
-                    <%= link_to '一括削除', exercise_path(exercise, delete_all: true), data: { turbo_method: :delete, confirm: 'この種目に関連する全ての記録を削除しますか？' }, class: 'btn btn-danger' %> 
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        <% end %>
-      </div>
-    <% end %>
-  <% end %>
-</div>
-<%= render 'edit_modal' %>
-<%= render 'add_modal' %>
-
-
+<div class="exercise-index-background"> 
+  <% if @selected_date %> 
+  <div class="date-display"> 
+    <h2 class="text-center date-title"><%= @selected_date.strftime("%Y年 %m月 %d日") %></h2> 
+  </div> 
+  <% end %> 
+   
+  <% if @selected_date.nil? %> 
+    <div class="user-instructions instructions-box"> 
+      <p>既存の部位に種目を追加したい場合は「種目を追加」のボタンから種目名を追加できます。</p> 
+      <p>新しく部位・種目を追加したい場合は、新規追加ページから追加できます。</p> 
+    </div> 
+  <% end %> 
+   
+  <% if @exercises.empty? %> 
+    <%= link_to new_exercise_path, class: "message-box-link" do %> 
+      <div class="text-center message-box"> 
+        <p class="no-exercise-message">トレーニング種目を追加してください。</p> 
+      </div> 
+    <% end %> 
+  <% else %> 
+    <% @exercises.group_by(&:part).each do |part, exercises| %> 
+      <h2 class="part-title" data-toggle="collapse" data-target="#exercises-for-<%= part %>"><%= part %></h2> 
+   
+      <!-- パーシャルのレンダリング --> 
+      <%= render 'exercises/new_exercise_modal', part: part %> 
+   
+      <div id="exercises-for-<%= part %>" class="collapse"> 
+        <% if @selected_date.present? %> 
+           
+            <table class="styled-table date-specific-table table table-bordered"> 
+              <thead> 
+                <tr> 
+                  <th class="exercise-name-column">種目</th> 
+                  <th class="set-column">セット</th> 
+                  <th class="weight-column">重量(㎏)</th> 
+                  <th class="reps-column">回数</th> 
+                  <th class="one-rm-column">1RM(㎏)</th> 
+                  <th class="exercise-name-column">操作</th> 
+                </tr> 
+              </thead> 
+              <tbody> 
+                <% exercises.uniq { |e| e.exercise }.each do |exercise| %> 
+                  <tr> 
+                    <td> 
+                      <%= link_to exercise.exercise, exercise_path(exercise), class: "white-link" %> 
+                    </td> 
+                    <td class="set-column"> 
+                      <% exercise.training_records.each_with_index do |record, index| %> 
+                        <%= index + 1 %><br> 
+                      <% end %> 
+                    </td> 
+                    <td class="weight-column"> 
+                      <% exercise.training_records.each do |record| %> 
+                        <%= record.weight %><br> 
+                      <% end %> 
+                    </td> 
+                    <td class="reps-column"> 
+                      <% exercise.training_records.each do |record| %> 
+                        <%= record.reps %><br> 
+                      <% end %> 
+                    </td> 
+                    <td class="one-rm-column"> 
+                      <% exercise.training_records.each do |record| %> 
+                        <%= record.one_rm %><br> 
+                      <% end %> 
+                    </td> 
+                    <td class="exercise-actions-column"> 
+                      <%= link_to ' 削 除 ', exercise_path(exercise), data: { turbo_method: :delete, confirm: '削除してよろしいですか？' }, class: 'btn btn-danger' %> 
+                    </td> 
+                  </tr> 
+                <% end %> 
+              </tbody> 
+            </table> 
+        <% else %> 
+          <%= link_to '種目を追加', '#', class: 'btn btn-primary open-modal-link', data: { modal_selector: '#newExerciseModal', part_name: part } %> 
+          <table class="styled-table general-table table table-bordered table-top-adjust"> 
+            <thead> 
+              <tr> 
+                <th class="exercise-name-column">種目</th> 
+                <th class="exercise-actions-column">操作</th> 
+              </tr> 
+            </thead> 
+            <tbody> 
+              <tr> 
+                <td> 
+                  <select id="exercise-dropdown-<%= part %>" class="exercise-dropdown custom-exercise-dropdown" onchange="handleExerciseSelectChange(this, '<%= part %>')"> 
+                    <% @unique_exercises_by_part[part].each do |exercise| %> 
+                      <option value="<%= exercise.id %>"><%= exercise.exercise %></option> 
+                    <% end %> 
+                  </select> 
+                </td> 
+                <td> 
+                  <%= link_to '追加', '#', class: 'btn btn-add', data: { part: part, exercise_id: '' }, onclick: "handleAddButtonClick(this); return false;" %> 
+                  <%= link_to '編集', '#', class: 'btn btn-edit', data: { part: part, exercise_id: '' }, onclick: "handleEditButtonClick(this); return false;" %> 
+                  <%= link_to '一括削除', '#', class: 'btn btn-danger', data: { part: part, date: @selected_date.to_s }, onclick: "handleBulkDeleteSelectedExercise(this); return false;" %>
+                </td> 
+              </tr> 
+            </tbody> 
+          </table> 
+        <% end %> 
+      </div> 
+    <% end %> 
+  <% end %> 
+</div> 
+<%= render 'edit_modal' %> 
+<%= render 'add_modal' %> 

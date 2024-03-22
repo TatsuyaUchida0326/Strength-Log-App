@@ -1,0 +1,39 @@
+<%= form_with(model: @recipe, local: true, html: { class: 'needs-validation', novalidate: '' }) do |form| %>
+  <% if @recipe.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger" role="alert">
+      <h2><%= pluralize(@recipe.errors.count, "件のエラー") %>があります：</h2>
+
+      <ul>
+      <% @recipe.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, 'タイトル' %>
+    <%= form.text_field :title, id: :recipe_title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, '材料' %>
+    <%= form.text_area :description, id: :recipe_description, class: 'form-control', rows: 3 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :calories, 'カロリー' %>
+    <%= form.number_field :calories, id: :recipe_calories, class: 'form-control' %>
+  </div>
+
+  <div class="form-row">
+    <div class="col">
+      <%= form.label :cook_time, '調理時間（分）' %>
+      <%= form.number_field :cook_time, id: :recipe_cook_time, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="actions mt-3">
+    <%= form.submit '保存', class: 'btn btn-primary' %>
+  </div>
+<% end %>

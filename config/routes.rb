@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     collection do
       post :add_existing
       get :strength_log
+      delete :bulk_delete_selected
     end
   end
 end
-

@@ -10,7 +10,7 @@
           <div class="form-group">
             <%= form.label :date, "日付" %>
             <%= form.date_field :date, class: 'form-control', value: Date.today.to_s %>
-            <%= form.hidden_field :exercise_id, id: "exercise_id" %>
+            <%= form.hidden_field :exercise_id, id: "modal-exercise-id" %>
           </div>
           <%= form.submit "追加する", class: "btn btn-primary" %>
         <% end %>
@@ -21,3 +21,4 @@
     </div>
   </div>
 </div>
+

@@ -479,3 +479,67 @@
   width: 105.3%; // 幅設定
   transform: translateX(-29.5px) translateY(-10px);
 }
+
+.form-control-exercisefield {
+  height: 40px;
+  width: 70%;
+  border: 1px solid silver; /* 縁をつける */
+}
+
+.label-class-name {
+  font-size: 18px;
+  color: #333; /* テキストの色を暗いグレーに設定 */
+}
+
+.new-submit-class {
+  transform: translateX(160px) ;
+  background-color: #4CAF50; /* 通常時の背景色 */
+  border-color: #4CAF50; /* 通常時のボーダー色 */
+  transition: background-color 0.3s, border-color 0.3s; /* 色変更時のアニメーションを滑らかに */
+}
+
+.new-submit-class:hover {
+  background-color: #3e8e41; /* ホバー時の背景色を暗く */
+  border-color: #3e8e41; /* ホバー時のボーダー色も暗く */
+}
+
+.open-modal-link{
+  transform: translateX(-180px) translateY(-50px);
+  background-color: #02075D;
+}
+
+.table-top-adjust {
+  transform: translateY(-50px);
+}
+
+.instructions-box {
+  transform: translateY(10px);
+  border: 2px solid #007bff; /* 枠線 */
+  padding: 15px; /* 内側の余白 */
+  margin-bottom: 20px; /* 下部の余白 */
+  background-color: #f0f8ff; /* 薄い青の背景色 */
+  border-radius: 5px; /* 角丸 */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 軽い影 */
+}
+
+.instructions-box p {
+  margin: 0; /* <p>タグのマージンを取り除く */
+  color: #333; /* 文字色 */
+  font-size: 16px; /* 文字サイズ */
+}
+
+.custom-exercise-dropdown {
+  transform: translateX(-1px) translateY(5px);
+    background-color: black; /* カーソルバーの背景色を黒に設定 */
+    color: white; /* 文字色を白に設定 */
+    width: 700px !important;
+    height: 50px !important;
+    padding: 5px; /* 内側の余白を追加 */
+    border: 1px solid #ccc; /* 枠線を追加（オプション） */
+}
+
+.custom-exercise-dropdown option {
+    background-color: white; /* 選択肢の背景色を白に設定 */
+    color: black; /* 選択肢の文字色を黒に設定 */
+}
+

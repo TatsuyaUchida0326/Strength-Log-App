@@ -1,0 +1,18 @@
+/* 列間に仕切りを追加するカスタムスタイル */
+.table-bordered > tbody > tr > td, 
+.table-bordered > thead > tr > th {
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+}
+
+/* 最初と最後の列の左右の境界線を削除 */
+.table-bordered > tbody > tr > td:first-child, 
+.table-bordered > thead > tr > th:first-child {
+  border-left: none;
+}
+
+.table-bordered > tbody > tr > td:last-child, 
+.table-bordered > thead > tr > th:last-child {
+  border-right: none;
+}
+

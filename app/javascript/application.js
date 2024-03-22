@@ -3,11 +3,71 @@ import "@hotwired/turbo-rails";
 // グローバル変数の定義
 var myChart = null;
 
+// 選択された種目のIDを取得し、'追加'ボタンに設定する 
+window.handleExerciseSelectChange = function(selectElement, part) { 
+  const selectedExerciseId = selectElement.value; 
+  const editButton = document.querySelector(`.btn-edit[data-part='${part}']`); 
+  if (editButton) { 
+    editButton.setAttribute('data-exercise-id', selectedExerciseId); 
+  } 
+  document.querySelector(`.btn-add[data-part='${part}']`).setAttribute('data-exercise-id', selectedExerciseId); 
+};
+
+// '追加'ボタンクリック時に呼び出される関数
+window.handleAddButtonClick = function(buttonElement) {
+  const exerciseId = buttonElement.getAttribute('data-exercise-id');
+  openAddModal(exerciseId);
+};
+
+// 編集ボタンクリック時に呼び出される関数
+window.handleEditButtonClick = function(buttonElement) {
+  const exerciseId = buttonElement.getAttribute('data-exercise-id');
+  const modalId = `modal-${exerciseId}`;
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = 'block';
+  }
+};
+
+// 一括削除用の関数
+window.handleBulkDeleteSelectedExercise = function(element) {
+  const part = element.getAttribute('data-part');
+  const date = element.getAttribute('data-date'); // 日付情報を取得
+  const selectedExerciseId = document.querySelector(`#exercise-dropdown-${part}`).value;
+
+  if (confirm(`${part}の選択された種目をすべて削除してよろしいですか？`)) {
+    const deleteLink = document.createElement('a');
+    deleteLink.href = `/exercises/bulk_delete_selected?part=${part}&date=${date}&exercise_id=${selectedExerciseId}`; // 日付情報をクエリパラメータに追加
+    deleteLink.setAttribute('data-turbo-method', 'delete');
+    document.body.appendChild(deleteLink);
+    deleteLink.click();
+  }
+};
+
+window.openModalWithPart = function(modalSelector, partName) {
+    const modal = document.querySelector(modalSelector);
+    if (modal) {
+        modal.style.display = 'block';
+
+        // 部位名をモーダルのタイトルに設定
+        const partNameElement = modal.querySelector('#modalPartName');
+        if (partNameElement) {
+            partNameElement.textContent = partName;
+        }
+
+        // モーダル内の隠しフィールドに部位名を設定（前回の説明に基づく）
+        const partField = modal.querySelector('.part-input');
+        if (partField) {
+            partField.value = partName;
+        }
+    }
+};
+
 // トレーニング追加用のモーダルを開き、選択されたexercise_idを設定する関数
 window.openAddModal = function(exerciseId) {
   const modal = document.querySelector("#add-exercise-modal");
   if (modal) {
-    const exerciseIdField = modal.querySelector("#exercise_id");
+    const exerciseIdField = modal.querySelector("#modal-exercise-id"); // idの修正
     if (exerciseIdField) {
       exerciseIdField.value = exerciseId;
     }
@@ -327,5 +387,45 @@ document.addEventListener('turbo:load', () => {
   } 
 });
 
+document.addEventListener("turbo:load", function() {
+  // モーダルを開くリンクのクリックイベントにイベントリスナーを追加
+  document.querySelectorAll('.open-modal-link').forEach(function(link) {
+    link.addEventListener('click', function(event) {
+      event.preventDefault(); // デフォルトの動作を阻止
+      const modalSelector = this.getAttribute('data-modal-selector');
+      const partName = this.getAttribute('data-part-name');
+      openModalWithPart(modalSelector, partName); // モーダルを開く処理を呼び出し
+    });
+  });
+  
+  document.querySelectorAll('.close-modal').forEach(function(button) {
+    button.addEventListener('click', function() {
+      const modal = this.closest('.modal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+    });
+  });
+  
+  document.querySelectorAll('.add-exercise-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const partName = this.dataset.part; // ボタンのdata-part属性から部位名を取得
+      openModalWithPart('#newExerciseModal', partName); // 部位名をモーダル開く関数に渡す
+    });
+  });
+  
+  // ドロップダウンリストの選択を初期化し、changeイベントを発火させる
+  document.querySelectorAll('.exercise-dropdown').forEach(function(dropdown) {
+    if (dropdown.dispatchEvent) {
+      // changeイベントを作成
+      var event = new Event('change', {
+        'bubbles': true,
+        'cancelable': true
+      });
+      // changeイベントを発火
+      dropdown.dispatchEvent(event);
+    }
+  });
+});
 
 

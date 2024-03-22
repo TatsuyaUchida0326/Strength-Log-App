@@ -1,0 +1,31 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h1><%= @recipe.title %></h1>
+        </div>
+        <div class="card-body">
+          <% if @recipe.images.attached? %>
+            <% @recipe.images.each do |image| %>
+              <%= image_tag image, width: "300", height: "200", class: "img-fluid mb-3" %>
+            <% end %>
+          <% end %>
+          <p class="card-text"><strong>材料:</strong> <%= @recipe.description %></p>
+          <p class="card-text"><strong>カロリー:</strong> <%= @recipe.calories %></p>
+          <p class="card-text"><strong>調理時間:</strong> <%= @recipe.cook_time %>分</p>
+          <!-- 画像アップロードフォーム -->
+          <%= form_with(model: @recipe, url: upload_image_recipe_path(@recipe), method: :patch, local: true, html: { multipart: true }) do |form| %>
+            <%= form.label :images, "画像を挿入" %>
+            <%= form.file_field :images, direct_upload: true, multiple: true %>
+            <%= form.submit "画像をアップロード", class: "btn btn-info" %>
+          <% end %>
+          <%= link_to '編集', edit_recipe_path(@recipe), class: 'btn btn-primary' %> 
+          <%= link_to '一覧に戻る', recipes_path, class: 'btn btn-secondary ml-2' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

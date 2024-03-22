@@ -1,0 +1,30 @@
+<h1>レシピ一覧</h1>
+
+<table class="table table-striped table-hover table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th>タイトル</th>
+      <th>材料</th>
+      <th>カロリー</th>
+      <th>調理時間</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recipes.each do |recipe| %>
+      <tr>
+        <td><%= recipe.title %></td>
+        <td><%= recipe.description %></td>
+        <td><%= recipe.calories %></td>
+        <td><%= recipe.cook_time %>分</td>
+        <td>
+          <%= link_to '詳細', recipe_path(recipe), class: 'btn btn-primary btn-sm' %>
+          <%= link_to '編集', edit_recipe_path(recipe), class: 'btn btn-secondary btn-sm' %>
+          <%= link_to '削除', recipe_path(recipe), data: { turbo_method: :delete, confirm: '本当に削除しますか？' }, class: 'btn btn-danger btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to '新しいレシピを追加', new_recipe_path, class: 'btn btn-success' %>
